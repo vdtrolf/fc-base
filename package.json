@@ -1,7 +1,8 @@
 {
   "main": "dist/app.js",
   "scripts": {
-    "start": "tsc && node dist/index.js",
+    "compile": "tsc --project ./tsconfig.json",
+    "start": "node dist/index.js",
     "lint": "eslint . --ext .ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
