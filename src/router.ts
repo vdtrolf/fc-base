@@ -1,9 +1,8 @@
 // External Dependencies
 
 import express, { Request, Response } from "express";
-import { ObjectId } from "mongodb";
-import { collections } from "../services/database.service";
-import Painting from "../models/painting";
+import {getAsyncItems, getItem} from "./acebasehelper";
+import Painting from "./models/paintings";
 
 // Global Config
 
@@ -14,7 +13,7 @@ paintingsRouter.use(express.json());
 
 paintingsRouter.get("/", async (_req: Request, res: Response) => {
     try {
-       const paintings = (await collections.paintings.find({}).toArray()) as unknown  as Painting[];
+       const paintings = (await getAsyncItems("paintings")).toArray() as unknown  as Painting[];
 
         res.status(200).send(paintings);
     } catch (error) {
@@ -25,8 +24,7 @@ paintingsRouter.get("/", async (_req: Request, res: Response) => {
 paintingsRouter.get("/:id", async (req: Request, res: Response) => {
     const id = req?.params?.id;
     try {
-        const query = { _id: new ObjectId(id) };
-        const painting = (await collections.paintings.findOne(query)) as unknown as Painting;
+        const painting = (await getItem("paintings",id)) as unknown as Painting;
 
         if (painting) {
             res.status(200).send(painting);

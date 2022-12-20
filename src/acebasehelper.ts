@@ -1,12 +1,5 @@
-const { AceBase } = require("acebase");
-
-// logger stuff
-const loggerReq = require("./logger.js");
-let log = loggerReq.log;
-const LOGVERB = loggerReq.LOGVERB;
-const LOGINFO = loggerReq.LOGINFO;
-const LOGERR = loggerReq.LOGERR;
-const LOGDATA = loggerReq.LOGDATA;
+import { AceBase } from "acebase";
+import { log, LOGVERB, LOGINFO, LOGERR, LOGDATA } from "./logger"
 
 const realm = "db";
 const source = "acebasehelper.js";
@@ -15,20 +8,20 @@ const source = "acebasehelper.js";
 let db = null;
 const debug = false;
 
-const createDb = () => {
+export const createDb = async () => {
   if (db === null) {
     const options = { logLevel: "err" }; //   'verbose'};
-    db = new AceBase("my_db", options);
+    db = new AceBase("my_db");
   }
 };
 
-const cleanDb = () => {
+export const cleanDb = () => {
   if (db && db.ready()) {
     db.query("island").take(1000).remove();
   }
 };
 
-const putItem = (tableName, Item, uniqueId) => {
+export const putItem = (tableName:string, Item:string, uniqueId:string) => {
   
   log(realm, source, "putItem", 
           "table " +
@@ -51,7 +44,7 @@ const putItem = (tableName, Item, uniqueId) => {
   }
 };
 
-const getItem = async (tableName, uniqueId) => {
+export const getItem = async (tableName:string, uniqueId:string) => {
 
   log(realm, source, "getItem", 
           "table " +
@@ -72,11 +65,11 @@ const getItem = async (tableName, uniqueId) => {
 
 };
 
-const getAsyncItems = async (
-    tableName,
-    filterIdx = "id",
-    filterComparator = ">",
-    filterVal = 0
+export const getAsyncItems = async (
+    tableName:string,
+    filterIdx:string = "id",
+    filterComparator:string = ">",
+    filterVal:number = 0
   ) => {
 
   log(realm, source, "getAsyncItems", 
@@ -104,22 +97,11 @@ const getAsyncItems = async (
   }
 };
   
-
-const deleteItem = (tableName, uniqueId) => {
+export const deleteItem = (tableName:string, uniqueId:string) => {
   if (db && db.ready()) {
     db.ref(`${tableName}/${uniqueId}`).remove();
     return true;
   } else {
     return false;
   }
-};
-
-// now we export the class, so other modules can create Penguin objects
-module.exports = {
-  getAsyncItems,
-  putItem,
-  getItem,
-  deleteItem,
-  createDb,
-  cleanDb
 };

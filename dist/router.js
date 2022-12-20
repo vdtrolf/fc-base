@@ -15,15 +15,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.paintingsRouter = void 0;
 const express_1 = __importDefault(require("express"));
-const mongodb_1 = require("mongodb");
-const database_service_1 = require("../services/database.service");
+const acebasehelper_1 = require("./acebasehelper");
 // Global Config
 exports.paintingsRouter = express_1.default.Router();
 exports.paintingsRouter.use(express_1.default.json());
 // GET
 exports.paintingsRouter.get("/", (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const paintings = (yield database_service_1.collections.paintings.find({}).toArray());
+        const paintings = (yield (0, acebasehelper_1.getAsyncItems)("paintings")).toArray();
         res.status(200).send(paintings);
     }
     catch (error) {
@@ -34,8 +33,7 @@ exports.paintingsRouter.get("/:id", (req, res) => __awaiter(void 0, void 0, void
     var _a;
     const id = (_a = req === null || req === void 0 ? void 0 : req.params) === null || _a === void 0 ? void 0 : _a.id;
     try {
-        const query = { _id: new mongodb_1.ObjectId(id) };
-        const painting = (yield database_service_1.collections.paintings.findOne(query));
+        const painting = (yield (0, acebasehelper_1.getItem)("paintings", id));
         if (painting) {
             res.status(200).send(painting);
         }

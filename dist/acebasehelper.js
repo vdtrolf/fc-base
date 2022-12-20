@@ -1,3 +1,4 @@
+"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -7,34 +8,32 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-const { AceBase } = require("acebase");
-// logger stuff
-const loggerReq = require("./logger.js");
-let log = loggerReq.log;
-const LOGVERB = loggerReq.LOGVERB;
-const LOGINFO = loggerReq.LOGINFO;
-const LOGERR = loggerReq.LOGERR;
-const LOGDATA = loggerReq.LOGDATA;
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.deleteItem = exports.getAsyncItems = exports.getItem = exports.putItem = exports.cleanDb = exports.createDb = void 0;
+const acebase_1 = require("acebase");
+const logger_1 = require("./logger");
 const realm = "db";
 const source = "acebasehelper.js";
 let db = null;
 const debug = false;
-const createDb = () => {
+const createDb = () => __awaiter(void 0, void 0, void 0, function* () {
     if (db === null) {
         const options = { logLevel: "err" }; //   'verbose'};
-        db = new AceBase("my_db", options);
+        db = new acebase_1.AceBase("my_db");
     }
-};
+});
+exports.createDb = createDb;
 const cleanDb = () => {
     if (db && db.ready()) {
         db.query("island").take(1000).remove();
     }
 };
+exports.cleanDb = cleanDb;
 const putItem = (tableName, Item, uniqueId) => {
-    log(realm, source, "putItem", "table " +
+    (0, logger_1.log)(realm, source, "putItem", "table " +
         tableName +
         " id: " +
-        uniqueId, LOGINFO, LOGDATA);
+        uniqueId, logger_1.LOGINFO, logger_1.LOGDATA);
     if (db && db.ready()) {
         db.ref(`${tableName}/${uniqueId}`).set(Item);
         //console.log("================ put ======");
@@ -46,11 +45,12 @@ const putItem = (tableName, Item, uniqueId) => {
         return false;
     }
 };
-const getItem = (tableName, uniqueId) => __awaiter(this, void 0, void 0, function* () {
-    log(realm, source, "getItem", "table " +
+exports.putItem = putItem;
+const getItem = (tableName, uniqueId) => __awaiter(void 0, void 0, void 0, function* () {
+    (0, logger_1.log)(realm, source, "getItem", "table " +
         tableName +
         " id: " +
-        uniqueId, LOGINFO, LOGDATA);
+        uniqueId, logger_1.LOGINFO, logger_1.LOGDATA);
     if (db && db.ready()) {
         const data = yield db.ref(`${tableName}/${uniqueId}`).get();
         if (data.exists) {
@@ -64,8 +64,9 @@ const getItem = (tableName, uniqueId) => __awaiter(this, void 0, void 0, functio
         return "no db";
     }
 });
-const getAsyncItems = (tableName, filterIdx = "id", filterComparator = ">", filterVal = 0) => __awaiter(this, void 0, void 0, function* () {
-    log(realm, source, "getAsyncItems", "table " +
+exports.getItem = getItem;
+const getAsyncItems = (tableName, filterIdx = "id", filterComparator = ">", filterVal = 0) => __awaiter(void 0, void 0, void 0, function* () {
+    (0, logger_1.log)(realm, source, "getAsyncItems", "table " +
         tableName +
         " filter " +
         filterIdx +
@@ -84,6 +85,7 @@ const getAsyncItems = (tableName, filterIdx = "id", filterComparator = ">", filt
         return "no db";
     }
 });
+exports.getAsyncItems = getAsyncItems;
 const deleteItem = (tableName, uniqueId) => {
     if (db && db.ready()) {
         db.ref(`${tableName}/${uniqueId}`).remove();
@@ -93,13 +95,5 @@ const deleteItem = (tableName, uniqueId) => {
         return false;
     }
 };
-// now we export the class, so other modules can create Penguin objects
-module.exports = {
-    getAsyncItems,
-    putItem,
-    getItem,
-    deleteItem,
-    createDb,
-    cleanDb
-};
+exports.deleteItem = deleteItem;
 //# sourceMappingURL=acebasehelper.js.map
