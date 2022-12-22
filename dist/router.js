@@ -22,7 +22,7 @@ exports.paintingsRouter.use(express_1.default.json());
 // GET
 exports.paintingsRouter.get("/", (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const paintings = (yield (0, acebasehelper_1.getAsyncItems)("paintings")).toArray();
+        const paintings = (yield (0, acebasehelper_1.getAsyncItems)("paintings"));
         res.status(200).send(paintings);
     }
     catch (error) {
@@ -40,6 +40,21 @@ exports.paintingsRouter.get("/:id", (req, res) => __awaiter(void 0, void 0, void
     }
     catch (error) {
         res.status(404).send(`Unable to find matching document with id: ${req.params.id}`);
+    }
+}));
+// POST
+exports.paintingsRouter.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const painting = req.body;
+        const id = Math.floor(Math.random() * 1000).toString();
+        const result = (0, acebasehelper_1.putItem)("paintings", painting, id);
+        result
+            ? res.status(201).send(`Successfully created a new painting with id ${id}`)
+            : res.status(500).send("Failed to create a new game.");
+    }
+    catch (error) {
+        console.error(error);
+        res.status(400).send(error.message);
     }
 }));
 //# sourceMappingURL=router.js.map

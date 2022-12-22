@@ -36,9 +36,9 @@ const putItem = (tableName, Item, uniqueId) => {
         uniqueId, logger_1.LOGINFO, logger_1.LOGDATA);
     if (db && db.ready()) {
         db.ref(`${tableName}/${uniqueId}`).set(Item);
-        //console.log("================ put ======");
-        //console.dir(Item);
-        //console.log("================ put ======");
+        console.log("================ put ======");
+        console.dir(Item);
+        console.log("================ put ======");
         return true;
     }
     else {
@@ -74,11 +74,12 @@ const getAsyncItems = (tableName, filterIdx = "id", filterComparator = ">", filt
         filterVal);
     if (db && db.ready()) {
         const snapshots = yield db.query(tableName)
-            .filter(filterIdx, filterComparator, filterVal)
+            .take(50)
+            // .filter(filterIdx, filterComparator, filterVal)
             .get();
-        // console.log("================ getAsyncItems ======");
-        // console.dir(snapshots.getValues());
-        // console.log("================ getAsyncItems ======");
+        console.log("================ getAsyncItems ======");
+        console.dir(snapshots.getValues());
+        console.log("================ getAsyncItems ======");
         return snapshots.getValues();
     }
     else {

@@ -7,6 +7,8 @@ const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const acebasehelper_1 = require("./acebasehelper");
 const router_1 = require("./router");
+const logger_1 = require("./logger");
+(0, logger_1.setLogLevel)("db", logger_1.LOGINFO);
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)());
 const port = 8080; // default port to listen

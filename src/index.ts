@@ -2,6 +2,10 @@ import express from "express";
 import cors from "cors";
 import { createDb } from "./acebasehelper"
 import { paintingsRouter } from "./router";
+import { LOGINFO, setLogLevel } from "./logger";
+
+
+setLogLevel ("db", LOGINFO)
 
 const app = express();
 app.use(cors());
