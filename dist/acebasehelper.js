@@ -74,8 +74,8 @@ const getAsyncItems = (tableName, filterIdx = "id", filterComparator = ">", filt
         filterVal);
     if (db && db.ready()) {
         const snapshots = yield db.query(tableName)
-            .take(50)
-            // .filter(filterIdx, filterComparator, filterVal)
+            // .take(50)
+            .filter(filterIdx, filterComparator, filterVal)
             .get();
         console.log("================ getAsyncItems ======");
         console.dir(snapshots.getValues());

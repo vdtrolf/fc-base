@@ -3,11 +3,17 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 // Class Implementation
 class Painting {
-    constructor(name, height, length, id) {
+    constructor(id, name, status, description, paintType, canvasType, height, length, date, price) {
+        this.id = id;
         this.name = name;
+        this.status = status;
+        this.description = description;
+        this.paintType = paintType;
+        this.canvasType = canvasType;
         this.height = height;
         this.length = length;
-        this.id = id;
+        this.date = date;
+        this.price = price;
     }
 }
 exports.default = Painting;

@@ -21,7 +21,7 @@ export const cleanDb = () => {
   }
 };
 
-export const putItem = (tableName:string, Item:any, uniqueId:string) => {
+export const putItem = (tableName:string, Item:any, uniqueId:number) => {
   
   log(realm, source, "putItem", 
           "table " +
@@ -81,8 +81,8 @@ export const getAsyncItems = async (
   if (db && db.ready()) {
 
     const snapshots = await db.query(tableName)
-      .take(50)
-      // .filter(filterIdx, filterComparator, filterVal)
+      // .take(50)
+      .filter(filterIdx, filterComparator, filterVal)
       .get();
       
       console.log("================ getAsyncItems ======");

@@ -22,7 +22,7 @@ paintingsRouter.get("/", async (_req: Request, res: Response) => {
 });
 
 paintingsRouter.get("/:id", async (req: Request, res: Response) => {
-    const id = req?.params?.id;
+    const id:string = req?.params?.id;
     try {
         const painting = (await getItem("paintings",id)) as unknown as Painting;
 
@@ -40,11 +40,11 @@ paintingsRouter.post("/", async (req: Request, res: Response) => {
     
     try {
         const painting = req.body as Painting;
-        const id:string = Math.floor(Math.random() * 1000).toString();
-        const result = putItem("paintings",painting, id);
+        // const id:string = Math.floor(Math.random() * 1000).toString();
+        const result = putItem("paintings",painting, painting.id);
 
         result
-            ? res.status(201).send(`Successfully created a new painting with id ${id}`)
+            ? res.status(201).send(`Successfully created a new painting with id ${painting.id}`)
             : res.status(500).send("Failed to create a new game.");
     } catch (error) {
         console.error(error);

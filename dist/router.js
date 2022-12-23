@@ -46,10 +46,10 @@ exports.paintingsRouter.get("/:id", (req, res) => __awaiter(void 0, void 0, void
 exports.paintingsRouter.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const painting = req.body;
-        const id = Math.floor(Math.random() * 1000).toString();
-        const result = (0, acebasehelper_1.putItem)("paintings", painting, id);
+        // const id:string = Math.floor(Math.random() * 1000).toString();
+        const result = (0, acebasehelper_1.putItem)("paintings", painting, painting.id);
         result
-            ? res.status(201).send(`Successfully created a new painting with id ${id}`)
+            ? res.status(201).send(`Successfully created a new painting with id ${painting.id}`)
             : res.status(500).send("Failed to create a new game.");
     }
     catch (error) {
