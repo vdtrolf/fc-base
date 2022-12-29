@@ -1,0 +1,1 @@
+{"version":3,"file":"createPainting.js","sourceRoot":"","sources":["../../src/api/createPainting.ts"],"names":[],"mappings":";;;AAEO,MAAM,cAAc,GAAG,CAAC,QAAc,EAAE,QAAmB,EAAE,EAAE;IACpE,OAAO,QAAQ,CAAC,OAAO,CAAC,WAAW,EAAC,QAAQ,EAAE,QAAQ,CAAC,EAAE,CAAC,CAAC;AAC7D,CAAC,CAAA;AAFY,QAAA,cAAc,kBAE1B"}

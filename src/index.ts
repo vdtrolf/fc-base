@@ -1,25 +1,32 @@
+import * as dotenv from 'dotenv' 
+dotenv.config()
+
 import express from "express";
 import cors from "cors";
-import { createDb } from "./acebasehelper"
-import { paintingsRouter } from "./router";
-import { LOGINFO, setLogLevel } from "./logger";
-
+import { paintingsRouter, setDbHelper } from "./api/router";
+import { LOGINFO, setLogLevel } from "./services/logger";
 
 setLogLevel ("db", LOGINFO)
 
 const app = express();
 app.use(cors());
-const port = 8080; // default port to listen
+const port = process.env.EXPRESSPORT; // default port to listen
 
-createDb()
-    .then(() => {
-        app.use("/paintings", paintingsRouter);
+console.log(">>>" + process.env.EXPRESSURL + " >>> " + port)
 
-        app.listen(port, () => {
+import ("./models/" + process.env.DBHELPER)
+    .then((module) => {
+        module.createDb()
+        .then(() => {
+            setDbHelper(module);    
+            app.use("/paintings", paintingsRouter);
+
+            app.listen(port, () => {
             console.log(`Server started at http://localhost:${port}`);
+            });
+        })
+        .catch((error: Error) => {
+            console.error("Database connection failed", error);
+            process.exit();
         });
-    })
-    .catch((error: Error) => {
-        console.error("Database connection failed", error);
-        process.exit();
     });

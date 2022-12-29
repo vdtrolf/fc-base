@@ -1,8 +1,20 @@
 // External Dependencies
+import * as dotenv from 'dotenv' 
+dotenv.config()
 
 import express, { Request, Response } from "express";
-import {getAsyncItems, getItem, putItem} from "./acebasehelper";
-import Painting from "./models/paintings";
+import Painting from "../models/paintings";
+import {getList} from "./getPaintingsList"
+import {getPainting} from "./getPainting"
+import {createPainting} from "./createPainting"
+
+// Set de db helper, which can be i.e. acebase or MondoDB
+
+let dbHelper : any = null;
+
+export const setDbHelper = (module) => {
+    dbHelper = module;
+}
 
 // Global Config
 
@@ -13,7 +25,7 @@ paintingsRouter.use(express.json());
 
 paintingsRouter.get("/", async (_req: Request, res: Response) => {
     try {
-       const paintings = (await getAsyncItems("paintings")) as unknown ;
+       const paintings = (await getList(dbHelper));
 
         res.status(200).send(paintings);
     } catch (error) {
@@ -24,7 +36,7 @@ paintingsRouter.get("/", async (_req: Request, res: Response) => {
 paintingsRouter.get("/:id", async (req: Request, res: Response) => {
     const id:string = req?.params?.id;
     try {
-        const painting = (await getItem("paintings",id)) as unknown as Painting;
+        const painting : Painting = (await getPainting(dbHelper,id));
 
         if (painting) {
             res.status(200).send(painting);
@@ -40,8 +52,7 @@ paintingsRouter.post("/", async (req: Request, res: Response) => {
     
     try {
         const painting = req.body as Painting;
-        // const id:string = Math.floor(Math.random() * 1000).toString();
-        const result = putItem("paintings",painting, painting.id);
+        const result = createPainting(dbHelper,painting);
 
         result
             ? res.status(201).send(`Successfully created a new painting with id ${painting.id}`)

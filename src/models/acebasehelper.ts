@@ -1,5 +1,5 @@
 import { AceBase } from "acebase";
-import { log, LOGVERB, LOGINFO, LOGERR, LOGDATA } from "./logger"
+import { log, LOGVERB, LOGINFO, LOGERR, LOGDATA } from "../services/logger"
 
 const realm = "db";
 const source = "acebasehelper.js";
