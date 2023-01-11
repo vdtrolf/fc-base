@@ -1,0 +1,1 @@
+{"version":3,"file":"createSignature.js","sourceRoot":"","sources":["../../src/api/createSignature.ts"],"names":[],"mappings":";;;AAEO,MAAM,eAAe,GAAG,CAAC,QAAc,EAAE,SAAqB,EAAE,EAAE;IACvE,OAAO,QAAQ,CAAC,OAAO,CAAC,YAAY,EAAC,SAAS,EAAE,SAAS,CAAC,EAAE,CAAC,CAAC;AAChE,CAAC,CAAA;AAFY,QAAA,eAAe,mBAE3B"}

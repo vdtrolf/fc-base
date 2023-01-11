@@ -35,14 +35,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.paintingsRouter = exports.setDbHelper = void 0;
+exports.signaturesRouter = exports.setDbHelper = void 0;
 // External Dependencies
 const dotenv = __importStar(require("dotenv"));
 dotenv.config();
 const express_1 = __importDefault(require("express"));
-const getPaintingsList_1 = require("./getPaintingsList");
-const getPainting_1 = require("./getPainting");
-const createPainting_1 = require("./createPainting");
+const getSignaturesList_1 = require("./getSignaturesList");
+const getSignature_1 = require("./getSignature");
+const createSignature_1 = require("./createSignature");
 // Set de db helper, which can be i.e. acebase or MondoDB
 let dbHelper = null;
 const setDbHelper = (module) => {
@@ -50,23 +50,23 @@ const setDbHelper = (module) => {
 };
 exports.setDbHelper = setDbHelper;
 // Global Config
-exports.paintingsRouter = express_1.default.Router();
-exports.paintingsRouter.use(express_1.default.json());
+exports.signaturesRouter = express_1.default.Router();
+exports.signaturesRouter.use(express_1.default.json());
 // GET
-exports.paintingsRouter.get("/", (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.signaturesRouter.get("/", (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const paintings = (yield (0, getPaintingsList_1.getList)(dbHelper));
+        const paintings = (yield (0, getSignaturesList_1.getList)(dbHelper));
         res.status(200).send(paintings);
     }
     catch (error) {
         res.status(500).send(error.message);
     }
 }));
-exports.paintingsRouter.get("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.signaturesRouter.get("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     const id = (_a = req === null || req === void 0 ? void 0 : req.params) === null || _a === void 0 ? void 0 : _a.id;
     try {
-        const painting = (yield (0, getPainting_1.getPainting)(dbHelper, id));
+        const painting = (yield (0, getSignature_1.getSignature)(dbHelper, id));
         if (painting) {
             res.status(200).send(painting);
         }
@@ -76,12 +76,12 @@ exports.paintingsRouter.get("/:id", (req, res) => __awaiter(void 0, void 0, void
     }
 }));
 // POST
-exports.paintingsRouter.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.signaturesRouter.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const painting = req.body;
-        const result = (0, createPainting_1.createPainting)(dbHelper, painting);
+        const signature = req.body;
+        const result = (0, createSignature_1.createSignature)(dbHelper, signature);
         result
-            ? res.status(201).send(`Successfully created a new painting with id ${painting.id}`)
+            ? res.status(201).send(`Successfully created a new signature with id ${signature.id}`)
             : res.status(500).send("Failed to create a new game.");
     }
     catch (error) {

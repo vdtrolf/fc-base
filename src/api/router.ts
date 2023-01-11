@@ -3,10 +3,10 @@ import * as dotenv from 'dotenv'
 dotenv.config()
 
 import express, { Request, Response } from "express";
-import Painting from "../models/paintings";
-import {getList} from "./getPaintingsList"
-import {getPainting} from "./getPainting"
-import {createPainting} from "./createPainting"
+import Signature from "../models/signatures";
+import {getList} from "./getSignaturesList"
+import {getSignature} from "./getSignature"
+import {createSignature} from "./createSignature"
 
 // Set de db helper, which can be i.e. acebase or MondoDB
 
@@ -18,12 +18,12 @@ export const setDbHelper = (module) => {
 
 // Global Config
 
-export const paintingsRouter = express.Router();
-paintingsRouter.use(express.json());
+export const signaturesRouter = express.Router();
+signaturesRouter.use(express.json());
 
 // GET
 
-paintingsRouter.get("/", async (_req: Request, res: Response) => {
+signaturesRouter.get("/", async (_req: Request, res: Response) => {
     try {
        const paintings = (await getList(dbHelper));
 
@@ -33,10 +33,10 @@ paintingsRouter.get("/", async (_req: Request, res: Response) => {
     }
 });
 
-paintingsRouter.get("/:id", async (req: Request, res: Response) => {
+signaturesRouter.get("/:id", async (req: Request, res: Response) => {
     const id:string = req?.params?.id;
     try {
-        const painting : Painting = (await getPainting(dbHelper,id));
+        const painting : Signature = (await getSignature(dbHelper,id));
 
         if (painting) {
             res.status(200).send(painting);
@@ -48,14 +48,14 @@ paintingsRouter.get("/:id", async (req: Request, res: Response) => {
 
 // POST
 
-paintingsRouter.post("/", async (req: Request, res: Response) => {
+signaturesRouter.post("/", async (req: Request, res: Response) => {
     
     try {
-        const painting = req.body as Painting;
-        const result = createPainting(dbHelper,painting);
+        const signature = req.body as Signature;
+        const result = createSignature(dbHelper,signature);
 
         result
-            ? res.status(201).send(`Successfully created a new painting with id ${painting.id}`)
+            ? res.status(201).send(`Successfully created a new signature with id ${signature.id}`)
             : res.status(500).send("Failed to create a new game.");
     } catch (error) {
         console.error(error);

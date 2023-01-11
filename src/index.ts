@@ -3,7 +3,7 @@ dotenv.config()
 
 import express from "express";
 import cors from "cors";
-import { paintingsRouter, setDbHelper } from "./api/router";
+import { signaturesRouter, setDbHelper } from "./api/router";
 import { LOGINFO, setLogLevel } from "./services/logger";
 
 setLogLevel ("db", LOGINFO)
@@ -19,7 +19,7 @@ import ("./models/" + process.env.DBHELPER)
         module.createDb()
         .then(() => {
             setDbHelper(module);    
-            app.use("/paintings", paintingsRouter);
+            app.use("/signatures", signaturesRouter);
 
             app.listen(port, () => {
             console.log(`Server started at http://localhost:${port}`);
