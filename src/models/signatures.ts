@@ -7,6 +7,7 @@ export default class Signature {
         public name: string, 
         public surname: string,
         public email : string, 
+        public phone : string, 
         public observation: string,
         public date: string) {}
 }
