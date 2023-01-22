@@ -4,9 +4,13 @@ dotenv.config()
 
 import express, { Request, Response } from "express";
 import Signature from "../models/signatures";
-import {getList} from "./getSignaturesList"
+import {getSignaturesList} from "./getSignaturesList"
 import {getSignature} from "./getSignature"
 import {createSignature} from "./createSignature"
+import User from "../models/users";
+import {getUsersList} from "./getUsersList"
+import {getUser} from "./getUser"
+import {createUser} from "./createUser"
 
 // Set de db helper, which can be i.e. acebase or MondoDB
 
@@ -18,14 +22,14 @@ export const setDbHelper = (module) => {
 
 // Global Config
 
-export const signaturesRouter = express.Router();
-signaturesRouter.use(express.json());
+export const naturalisRouter = express.Router();
+naturalisRouter.use(express.json());
 
-// GET
+// GET SIGNATURE
 
-signaturesRouter.get("/", async (_req: Request, res: Response) => {
+naturalisRouter.get("/naturalis/signatures/", async (_req: Request, res: Response) => {
     try {
-       const paintings = (await getList(dbHelper));
+       const paintings = (await getSignaturesList(dbHelper));
 
         res.status(200).send(paintings);
     } catch (error) {
@@ -33,7 +37,7 @@ signaturesRouter.get("/", async (_req: Request, res: Response) => {
     }
 });
 
-signaturesRouter.get("/:id", async (req: Request, res: Response) => {
+naturalisRouter.get("/naturalis/signatures/:id", async (req: Request, res: Response) => {
     const id:string = req?.params?.id;
     try {
         const painting : Signature = (await getSignature(dbHelper,id));
@@ -42,13 +46,13 @@ signaturesRouter.get("/:id", async (req: Request, res: Response) => {
             res.status(200).send(painting);
         }
     } catch (error) {
-        res.status(404).send(`Unable to find matching document with id: ${req.params.id}`);
+        res.status(404).send(`Unable to find matching signature with id: ${req.params.id}`);
     }
 });
 
-// POST
+// POST SIGNATURE
 
-signaturesRouter.post("/", async (req: Request, res: Response) => {
+naturalisRouter.post("/naturalis/signatures/", async (req: Request, res: Response) => {
     
     try {
         const signature = req.body as Signature;
@@ -56,7 +60,49 @@ signaturesRouter.post("/", async (req: Request, res: Response) => {
 
         result
             ? res.status(201).send(`Successfully created a new signature with id ${signature.id}`)
-            : res.status(500).send("Failed to create a new game.");
+            : res.status(500).send("Failed to create a new signature.");
+    } catch (error) {
+        console.error(error);
+        res.status(400).send(error.message);
+    }
+});
+
+// GET USER
+
+naturalisRouter.get("/naturalis/users/", async (_req: Request, res: Response) => {
+    try {
+       const users = (await getUsersList(dbHelper));
+
+        res.status(200).send(users);
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+});
+
+naturalisRouter.get("/naturalis/users/:id", async (req: Request, res: Response) => {
+    const id:string = req?.params?.id;
+    try {
+        const user : User = (await getUser(dbHelper,id));
+
+        if (user) {
+            res.status(200).send(user);
+        }
+    } catch (error) {
+        res.status(404).send(`Unable to find matching user with id: ${req.params.id}`);
+    }
+});
+
+// POST SIGNATURE
+
+naturalisRouter.post("/naturalis/users/", async (req: Request, res: Response) => {
+    
+    try {
+        const user = req.body as User;
+        const result = createUser(dbHelper,user);
+
+        result
+            ? res.status(201).send(`Successfully created a new user with id ${user.id}`)
+            : res.status(500).send("Failed to create a new user.");
     } catch (error) {
         console.error(error);
         res.status(400).send(error.message);

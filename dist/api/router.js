@@ -35,7 +35,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.signaturesRouter = exports.setDbHelper = void 0;
+exports.naturalisRouter = exports.setDbHelper = void 0;
 // External Dependencies
 const dotenv = __importStar(require("dotenv"));
 dotenv.config();
@@ -43,6 +43,9 @@ const express_1 = __importDefault(require("express"));
 const getSignaturesList_1 = require("./getSignaturesList");
 const getSignature_1 = require("./getSignature");
 const createSignature_1 = require("./createSignature");
+const getUsersList_1 = require("./getUsersList");
+const getUser_1 = require("./getUser");
+const createUser_1 = require("./createUser");
 // Set de db helper, which can be i.e. acebase or MondoDB
 let dbHelper = null;
 const setDbHelper = (module) => {
@@ -50,19 +53,19 @@ const setDbHelper = (module) => {
 };
 exports.setDbHelper = setDbHelper;
 // Global Config
-exports.signaturesRouter = express_1.default.Router();
-exports.signaturesRouter.use(express_1.default.json());
-// GET
-exports.signaturesRouter.get("/", (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.naturalisRouter = express_1.default.Router();
+exports.naturalisRouter.use(express_1.default.json());
+// GET SIGNATURE
+exports.naturalisRouter.get("/naturalis/signatures/", (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const paintings = (yield (0, getSignaturesList_1.getList)(dbHelper));
+        const paintings = (yield (0, getSignaturesList_1.getSignaturesList)(dbHelper));
         res.status(200).send(paintings);
     }
     catch (error) {
         res.status(500).send(error.message);
     }
 }));
-exports.signaturesRouter.get("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.naturalisRouter.get("/naturalis/signatures/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     const id = (_a = req === null || req === void 0 ? void 0 : req.params) === null || _a === void 0 ? void 0 : _a.id;
     try {
@@ -72,17 +75,54 @@ exports.signaturesRouter.get("/:id", (req, res) => __awaiter(void 0, void 0, voi
         }
     }
     catch (error) {
-        res.status(404).send(`Unable to find matching document with id: ${req.params.id}`);
+        res.status(404).send(`Unable to find matching signature with id: ${req.params.id}`);
     }
 }));
-// POST
-exports.signaturesRouter.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+// POST SIGNATURE
+exports.naturalisRouter.post("/naturalis/signatures/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const signature = req.body;
         const result = (0, createSignature_1.createSignature)(dbHelper, signature);
         result
             ? res.status(201).send(`Successfully created a new signature with id ${signature.id}`)
-            : res.status(500).send("Failed to create a new game.");
+            : res.status(500).send("Failed to create a new signature.");
+    }
+    catch (error) {
+        console.error(error);
+        res.status(400).send(error.message);
+    }
+}));
+// GET USER
+exports.naturalisRouter.get("/naturalis/users/", (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const users = (yield (0, getUsersList_1.getUsersList)(dbHelper));
+        res.status(200).send(users);
+    }
+    catch (error) {
+        res.status(500).send(error.message);
+    }
+}));
+exports.naturalisRouter.get("/naturalis/users/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _b;
+    const id = (_b = req === null || req === void 0 ? void 0 : req.params) === null || _b === void 0 ? void 0 : _b.id;
+    try {
+        const user = (yield (0, getUser_1.getUser)(dbHelper, id));
+        if (user) {
+            res.status(200).send(user);
+        }
+    }
+    catch (error) {
+        res.status(404).send(`Unable to find matching user with id: ${req.params.id}`);
+    }
+}));
+// POST SIGNATURE
+exports.naturalisRouter.post("/naturalis/users/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const user = req.body;
+        const result = (0, createUser_1.createUser)(dbHelper, user);
+        result
+            ? res.status(201).send(`Successfully created a new user with id ${user.id}`)
+            : res.status(500).send("Failed to create a new user.");
     }
     catch (error) {
         console.error(error);

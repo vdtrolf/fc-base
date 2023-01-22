@@ -42,7 +42,7 @@ console.log(">>>" + process.env.EXPRESSURL + " >>> " + port);
     module.createDb()
         .then(() => {
         (0, router_1.setDbHelper)(module);
-        app.use("/signatures", router_1.signaturesRouter);
+        app.use("/", router_1.naturalisRouter);
         app.listen(port, () => {
             console.log(`Server started at http://localhost:${port}`);
         });

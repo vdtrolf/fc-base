@@ -3,17 +3,14 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 // Class Implementation
 class Signature {
-    constructor(id, name, status, description, paintType, canvasType, height, length, date, price) {
+    constructor(id, name, surname, email, phone, observation, date) {
         this.id = id;
         this.name = name;
-        this.status = status;
-        this.description = description;
-        this.paintType = paintType;
-        this.canvasType = canvasType;
-        this.height = height;
-        this.length = length;
+        this.surname = surname;
+        this.email = email;
+        this.phone = phone;
+        this.observation = observation;
         this.date = date;
-        this.price = price;
     }
 }
 exports.default = Signature;

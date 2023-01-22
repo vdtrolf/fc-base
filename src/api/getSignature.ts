@@ -1,8 +1,8 @@
-import Painting from "../models/signatures";
+import Signature from "../models/signatures";
 
 
-export const getSignature = async (dbHelper, id) : Promise<Painting> => {
+export const getSignature = async (dbHelper, id) : Promise<Signature> => {
 
-  const painting : Painting = (await dbHelper.getItem("signatures",id)) as unknown as Painting;
+  const painting : Signature = (await dbHelper.getItem("signatures",id)) as unknown as Signature;
   return painting;
 }
