@@ -11,6 +11,10 @@ import User from "../models/users";
 import {getUsersList} from "./getUsersList"
 import {getUser} from "./getUser"
 import {createUser} from "./createUser"
+import Cardset from "../models/cardsets";
+import {getCardsetsList} from "./getCardsetsList"
+import {getCardset} from "./getCardset"
+import {createCardset} from "./createCardset"
 
 // Set de db helper, which can be i.e. acebase or MondoDB
 
@@ -22,12 +26,12 @@ export const setDbHelper = (module) => {
 
 // Global Config
 
-export const naturalisRouter = express.Router();
-naturalisRouter.use(express.json());
+export const flashRouter = express.Router();
+flashRouter.use(express.json());
 
 // GET SIGNATURE
 
-naturalisRouter.get("/naturalis/signatures/", async (_req: Request, res: Response) => {
+flashRouter.get("/flash/signatures/", async (_req: Request, res: Response) => {
     try {
        const paintings = (await getSignaturesList(dbHelper));
 
@@ -37,7 +41,7 @@ naturalisRouter.get("/naturalis/signatures/", async (_req: Request, res: Respons
     }
 });
 
-naturalisRouter.get("/naturalis/signatures/:id", async (req: Request, res: Response) => {
+flashRouter.get("/flash/signatures/:id", async (req: Request, res: Response) => {
     const id:string = req?.params?.id;
     try {
         const painting : Signature = (await getSignature(dbHelper,id));
@@ -52,7 +56,7 @@ naturalisRouter.get("/naturalis/signatures/:id", async (req: Request, res: Respo
 
 // POST SIGNATURE
 
-naturalisRouter.post("/naturalis/signatures/", async (req: Request, res: Response) => {
+flashRouter.post("/flash/signatures/", async (req: Request, res: Response) => {
     
     try {
         const signature = req.body as Signature;
@@ -69,7 +73,7 @@ naturalisRouter.post("/naturalis/signatures/", async (req: Request, res: Respons
 
 // GET USER
 
-naturalisRouter.get("/naturalis/users/", async (_req: Request, res: Response) => {
+flashRouter.get("/flash/users/", async (_req: Request, res: Response) => {
     try {
        const users = (await getUsersList(dbHelper));
 
@@ -79,7 +83,7 @@ naturalisRouter.get("/naturalis/users/", async (_req: Request, res: Response) =>
     }
 });
 
-naturalisRouter.get("/naturalis/users/:id", async (req: Request, res: Response) => {
+flashRouter.get("/flash/users/:id", async (req: Request, res: Response) => {
     const id:string = req?.params?.id;
     try {
         const user : User = (await getUser(dbHelper,id));
@@ -92,9 +96,9 @@ naturalisRouter.get("/naturalis/users/:id", async (req: Request, res: Response) 
     }
 });
 
-// POST SIGNATURE
+// POST USER
 
-naturalisRouter.post("/naturalis/users/", async (req: Request, res: Response) => {
+flashRouter.post("/flash/users/", async (req: Request, res: Response) => {
     
     try {
         const user = req.body as User;
@@ -103,6 +107,48 @@ naturalisRouter.post("/naturalis/users/", async (req: Request, res: Response) =>
         result
             ? res.status(201).send(`Successfully created a new user with id ${user.id}`)
             : res.status(500).send("Failed to create a new user.");
+    } catch (error) {
+        console.error(error);
+        res.status(400).send(error.message);
+    }
+});
+
+// GET CARDSET
+
+flashRouter.get("/flash/cardsets/", async (_req: Request, res: Response) => {
+    try {
+       const cardsets = (await getCardsetsList(dbHelper));
+
+        res.status(200).send(cardsets);
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+});
+
+flashRouter.get("/flash/cardsets/:id", async (req: Request, res: Response) => {
+    const id:string = req?.params?.id;
+    try {
+        const cardset : Cardset = (await getCardset(dbHelper,id));
+
+        if (cardset) {
+            res.status(200).send(cardset);
+        }
+    } catch (error) {
+        res.status(404).send(`Unable to find matching cardset with id: ${req.params.id}`);
+    }
+});
+
+// POST CARDSET
+
+flashRouter.post("/flash/cardsets/", async (req: Request, res: Response) => {
+    
+    try {
+        const cardset = req.body as Cardset;
+        const result = createCardset(dbHelper,cardset);
+
+        result
+            ? res.status(201).send(`Successfully created a new cardset with id ${cardset.id}`)
+            : res.status(500).send("Failed to create a new cardset.");
     } catch (error) {
         console.error(error);
         res.status(400).send(error.message);

@@ -11,8 +11,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getSignature = void 0;
 const getSignature = (dbHelper, id) => __awaiter(void 0, void 0, void 0, function* () {
-    const painting = (yield dbHelper.getItem("signatures", id));
-    return painting;
+    const signature = (yield dbHelper.getItem("signatures", id));
+    return signature;
 });
 exports.getSignature = getSignature;
 //# sourceMappingURL=getSignature.js.map

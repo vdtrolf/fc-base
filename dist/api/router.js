@@ -35,7 +35,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.naturalisRouter = exports.setDbHelper = void 0;
+exports.flashRouter = exports.setDbHelper = void 0;
 // External Dependencies
 const dotenv = __importStar(require("dotenv"));
 dotenv.config();
@@ -46,6 +46,9 @@ const createSignature_1 = require("./createSignature");
 const getUsersList_1 = require("./getUsersList");
 const getUser_1 = require("./getUser");
 const createUser_1 = require("./createUser");
+const getCardsetsList_1 = require("./getCardsetsList");
+const getCardset_1 = require("./getCardset");
+const createCardset_1 = require("./createCardset");
 // Set de db helper, which can be i.e. acebase or MondoDB
 let dbHelper = null;
 const setDbHelper = (module) => {
@@ -53,10 +56,10 @@ const setDbHelper = (module) => {
 };
 exports.setDbHelper = setDbHelper;
 // Global Config
-exports.naturalisRouter = express_1.default.Router();
-exports.naturalisRouter.use(express_1.default.json());
+exports.flashRouter = express_1.default.Router();
+exports.flashRouter.use(express_1.default.json());
 // GET SIGNATURE
-exports.naturalisRouter.get("/naturalis/signatures/", (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.flashRouter.get("/flash/signatures/", (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const paintings = (yield (0, getSignaturesList_1.getSignaturesList)(dbHelper));
         res.status(200).send(paintings);
@@ -65,7 +68,7 @@ exports.naturalisRouter.get("/naturalis/signatures/", (_req, res) => __awaiter(v
         res.status(500).send(error.message);
     }
 }));
-exports.naturalisRouter.get("/naturalis/signatures/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.flashRouter.get("/flash/signatures/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     const id = (_a = req === null || req === void 0 ? void 0 : req.params) === null || _a === void 0 ? void 0 : _a.id;
     try {
@@ -79,7 +82,7 @@ exports.naturalisRouter.get("/naturalis/signatures/:id", (req, res) => __awaiter
     }
 }));
 // POST SIGNATURE
-exports.naturalisRouter.post("/naturalis/signatures/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.flashRouter.post("/flash/signatures/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const signature = req.body;
         const result = (0, createSignature_1.createSignature)(dbHelper, signature);
@@ -93,7 +96,7 @@ exports.naturalisRouter.post("/naturalis/signatures/", (req, res) => __awaiter(v
     }
 }));
 // GET USER
-exports.naturalisRouter.get("/naturalis/users/", (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.flashRouter.get("/flash/users/", (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const users = (yield (0, getUsersList_1.getUsersList)(dbHelper));
         res.status(200).send(users);
@@ -102,7 +105,7 @@ exports.naturalisRouter.get("/naturalis/users/", (_req, res) => __awaiter(void 0
         res.status(500).send(error.message);
     }
 }));
-exports.naturalisRouter.get("/naturalis/users/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.flashRouter.get("/flash/users/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _b;
     const id = (_b = req === null || req === void 0 ? void 0 : req.params) === null || _b === void 0 ? void 0 : _b.id;
     try {
@@ -115,14 +118,51 @@ exports.naturalisRouter.get("/naturalis/users/:id", (req, res) => __awaiter(void
         res.status(404).send(`Unable to find matching user with id: ${req.params.id}`);
     }
 }));
-// POST SIGNATURE
-exports.naturalisRouter.post("/naturalis/users/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+// POST USER
+exports.flashRouter.post("/flash/users/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const user = req.body;
         const result = (0, createUser_1.createUser)(dbHelper, user);
         result
             ? res.status(201).send(`Successfully created a new user with id ${user.id}`)
             : res.status(500).send("Failed to create a new user.");
+    }
+    catch (error) {
+        console.error(error);
+        res.status(400).send(error.message);
+    }
+}));
+// GET CARDSET
+exports.flashRouter.get("/flash/cardsets/", (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const cardsets = (yield (0, getCardsetsList_1.getCardsetsList)(dbHelper));
+        res.status(200).send(cardsets);
+    }
+    catch (error) {
+        res.status(500).send(error.message);
+    }
+}));
+exports.flashRouter.get("/flash/cardsets/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _c;
+    const id = (_c = req === null || req === void 0 ? void 0 : req.params) === null || _c === void 0 ? void 0 : _c.id;
+    try {
+        const cardset = (yield (0, getCardset_1.getCardset)(dbHelper, id));
+        if (cardset) {
+            res.status(200).send(cardset);
+        }
+    }
+    catch (error) {
+        res.status(404).send(`Unable to find matching cardset with id: ${req.params.id}`);
+    }
+}));
+// POST CARDSET
+exports.flashRouter.post("/flash/cardsets/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const cardset = req.body;
+        const result = (0, createCardset_1.createCardset)(dbHelper, cardset);
+        result
+            ? res.status(201).send(`Successfully created a new cardset with id ${cardset.id}`)
+            : res.status(500).send("Failed to create a new cardset.");
     }
     catch (error) {
         console.error(error);

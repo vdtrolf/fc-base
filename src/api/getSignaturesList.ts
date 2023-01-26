@@ -1,7 +1,7 @@
 
 export const getSignaturesList = async (dbHelper) => { 
 
-  const paintings = (await dbHelper.getAsyncItems("signatures")) as unknown ;
-  return paintings;
+  const signatures = (await dbHelper.getAsyncItems("signatures")) as unknown ;
+  return signatures;
 
 }

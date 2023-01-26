@@ -37,12 +37,12 @@ const logger_1 = require("./services/logger");
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)());
 const port = process.env.EXPRESSPORT; // default port to listen
-console.log(">>>" + process.env.EXPRESSURL + " >>> " + port);
+// console.log(">>>" + process.env.EXPRESSURL + " >>> " + port)
 (_a = "./models/" + process.env.DBHELPER, Promise.resolve().then(() => __importStar(require(_a)))).then((module) => {
     module.createDb()
         .then(() => {
         (0, router_1.setDbHelper)(module);
-        app.use("/", router_1.naturalisRouter);
+        app.use("/", router_1.flashRouter);
         app.listen(port, () => {
             console.log(`Server started at http://localhost:${port}`);
         });
