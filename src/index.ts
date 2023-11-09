@@ -4,29 +4,40 @@ dotenv.config()
 import express from "express";
 import cors from "cors";
 import { flashRouter, setDbHelper } from "./api/router";
-import { LOGINFO, setLogLevel } from "./services/logger";
+import { setLogLevel } from "./services/logger";
+import { LOGINFO } from "./constants";
+
 
 setLogLevel ("db", LOGINFO)
 
 const app = express();
 app.use(cors());
 const port = process.env.EXPRESSPORT; // default port to listen
+const path = process.env.API_PATH; // default port to listen
 
-// console.log(">>>" + process.env.EXPRESSURL + " >>> " + port)
+
+const local = process.env.DB_ENVIRONMENT === "local"
+
+console.log(">>>" + "./models/" + process.env.DBHELPER + " >>> " + port)
 
 import ("./models/" + process.env.DBHELPER)
     .then((module) => {
-        module.createDb()
+        module.createDb(local)
         .then(() => {
+            console.dir(module.cleanDb())
             setDbHelper(module);    
             app.use("/", flashRouter);
 
             app.listen(port, () => {
-            console.log(`Server started at http://localhost:${port}`);
+            console.log(`Server started at http://localhost:${port}` + path);
             });
         })
         .catch((error: Error) => {
             console.error("Database connection failed", error);
             process.exit();
         });
-    });
+    })
+    .catch((error: Error) => {
+        console.error("Database creation failed", error);
+        process.exit();
+    });;

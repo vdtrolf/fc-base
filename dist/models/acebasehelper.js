@@ -12,11 +12,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteItem = exports.getAsyncItems = exports.getItem = exports.putItem = exports.cleanDb = exports.createDb = void 0;
 const acebase_1 = require("acebase");
 const logger_1 = require("../services/logger");
+const constants_1 = require("../constants");
 const realm = "db";
 const source = "acebasehelper.js";
 let db = null;
 const debug = false;
-const createDb = () => __awaiter(void 0, void 0, void 0, function* () {
+const createDb = (local) => __awaiter(void 0, void 0, void 0, function* () {
     if (db === null) {
         const options = { logLevel: "err" }; //   'verbose'};
         db = new acebase_1.AceBase("my_db");
@@ -33,7 +34,7 @@ const putItem = (tableName, Item, uniqueId) => {
     (0, logger_1.log)(realm, source, "putItem", "table " +
         tableName +
         " id: " +
-        uniqueId, logger_1.LOGINFO, logger_1.LOGDATA);
+        uniqueId, constants_1.LOGINFO, constants_1.LOGDATA);
     if (db && db.ready()) {
         db.ref(`${tableName}/${uniqueId}`).set(Item);
         console.log("================ put ======");
@@ -50,7 +51,7 @@ const getItem = (tableName, uniqueId) => __awaiter(void 0, void 0, void 0, funct
     (0, logger_1.log)(realm, source, "getItem", "table " +
         tableName +
         " id: " +
-        uniqueId, logger_1.LOGINFO, logger_1.LOGDATA);
+        uniqueId, constants_1.LOGINFO, constants_1.LOGDATA);
     if (db && db.ready()) {
         const data = yield db.ref(`${tableName}/${uniqueId}`).get();
         if (data.exists) {

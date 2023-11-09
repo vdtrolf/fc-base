@@ -1,0 +1,1 @@
+{"version":3,"file":"getGem.js","sourceRoot":"","sources":["../../src/api/getGem.ts"],"names":[],"mappings":";;;;;;;;;;;;AAGO,MAAM,MAAM,GAAG,CAAO,QAAQ,EAAE,EAAE,EAAiB,EAAE;IAE1D,MAAM,GAAG,GAAS,CAAC,MAAM,QAAQ,CAAC,OAAO,CAAC,MAAM,EAAC,EAAE,CAAC,CAAmB,CAAC;IACxE,OAAO,GAAG,CAAC;AACb,CAAC,CAAA,CAAA;AAJY,QAAA,MAAM,UAIlB"}

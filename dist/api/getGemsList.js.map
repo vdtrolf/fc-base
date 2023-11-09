@@ -1,0 +1,1 @@
+{"version":3,"file":"getGemsList.js","sourceRoot":"","sources":["../../src/api/getGemsList.ts"],"names":[],"mappings":";;;;;;;;;;;;AACO,MAAM,WAAW,GAAG,CAAO,QAAQ,EAAE,EAAE;IAE5C,MAAM,IAAI,GAAG,CAAC,MAAM,QAAQ,CAAC,aAAa,CAAC,MAAM,CAAC,CAAY,CAAE;IAChE,OAAO,IAAI,CAAC;AAEd,CAAC,CAAA,CAAA;AALY,QAAA,WAAW,eAKvB"}

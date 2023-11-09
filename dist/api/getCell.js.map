@@ -1,0 +1,1 @@
+{"version":3,"file":"getCell.js","sourceRoot":"","sources":["../../src/api/getCell.ts"],"names":[],"mappings":";;;;;;;;;;;;AAGO,MAAM,OAAO,GAAG,CAAO,QAAQ,EAAE,EAAE,EAAkB,EAAE;IAE5D,MAAM,IAAI,GAAU,CAAC,MAAM,QAAQ,CAAC,OAAO,CAAC,OAAO,EAAC,EAAE,CAAC,CAAoB,CAAC;IAC5E,OAAO,IAAI,CAAC;AACd,CAAC,CAAA,CAAA;AAJY,QAAA,OAAO,WAInB"}

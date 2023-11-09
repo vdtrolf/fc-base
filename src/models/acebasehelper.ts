@@ -1,5 +1,6 @@
 import { AceBase } from "acebase";
-import { log, LOGVERB, LOGINFO, LOGERR, LOGDATA } from "../services/logger"
+import { log } from "../services/logger"
+import { LOGVERB, LOGINFO, LOGERR, LOGDATA } from "../constants"
 
 const realm = "db";
 const source = "acebasehelper.js";
@@ -8,7 +9,7 @@ const source = "acebasehelper.js";
 let db = null;
 const debug = false;
 
-export const createDb = async () => {
+export const createDb = async (local:boolean) => {
   if (db === null) {
     const options = { logLevel: "err" }; //   'verbose'};
     db = new AceBase("my_db");
@@ -21,7 +22,7 @@ export const cleanDb = () => {
   }
 };
 
-export const putItem = (tableName:string, Item:any, uniqueId:number) => {
+export const putItem = (tableName:string, Item:any, uniqueId: string) => {
   
   log(realm, source, "putItem", 
           "table " +

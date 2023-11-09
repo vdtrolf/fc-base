@@ -1,0 +1,1 @@
+{"version":3,"file":"getGarbagesList.js","sourceRoot":"","sources":["../../src/api/getGarbagesList.ts"],"names":[],"mappings":";;;;;;;;;;;;AAAO,MAAM,eAAe,GAAG,CAAO,QAAQ,EAAE,EAAE;IAE9C,MAAM,QAAQ,GAAG,CAAC,MAAM,QAAQ,CAAC,aAAa,CAAC,UAAU,CAAC,CAAY,CAAE;IACxE,OAAO,QAAQ,CAAC;AAElB,CAAC,CAAA,CAAA;AALU,QAAA,eAAe,mBAKzB"}
