@@ -5,6 +5,7 @@ import express from "express";
 import cors from "cors";
 import { flashRouter, setDbHelper } from "./api/router";
 import { setLogLevel } from "./services/logger";
+import {initiateNames} from "./services/namesHelper"
 import { LOGINFO } from "./constants";
 
 
@@ -24,8 +25,12 @@ import ("./models/" + process.env.DBHELPER)
     .then((module) => {
         module.createDb(local)
         .then(() => {
-            console.dir(module.cleanDb())
+            let namesInitiated = module.cleanDb() 
+
             setDbHelper(module);    
+            
+            if (! namesInitiated) {initiateNames()}
+            
             app.use("/", flashRouter);
 
             app.listen(port, () => {

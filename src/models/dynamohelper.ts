@@ -11,44 +11,63 @@ let import_lib_dynamodb = require("@aws-sdk/lib-dynamodb");
 let client = null;
 let docClient = null
 
- // logger stuff
- const realm = "db";
- const source = "dynamohelper.js";
+// logger stuff
+const realm = "db";
+const source = "dynamohelper.js";
 
 
- const islandsdefs = {
-    AttributeDefinitions: [{ AttributeName: "id", AttributeType: "N" }],
-    KeySchema: [{ AttributeName: "id", KeyType: "HASH" }],
-    ProvisionedThroughput: {
-        ReadCapacityUnits: 5,
-        WriteCapacityUnits: 5,
-    },
-    TableName: "islands",
- };
+const islandsdefs = {
+  AttributeDefinitions: [{ AttributeName: "id", AttributeType: "N" }],
+  KeySchema: [{ AttributeName: "id", KeyType: "HASH" }],
+  ProvisionedThroughput: {
+    ReadCapacityUnits: 5,
+    WriteCapacityUnits: 5,
+  },
+  TableName: "islands",
+};
 
- const usersdefs = {
-    AttributeDefinitions: [{ AttributeName: "id", AttributeType: "N" }],
-    KeySchema: [{ AttributeName: "id", KeyType: "HASH" }],
-    ProvisionedThroughput: {
-        ReadCapacityUnits: 5,
-        WriteCapacityUnits: 5,
-    },
-    TableName: "users",
-  };
+const usersdefs = {
+  AttributeDefinitions: [{ AttributeName: "id", AttributeType: "N" }],
+  KeySchema: [{ AttributeName: "id", KeyType: "HASH" }],
+  ProvisionedThroughput: {
+    ReadCapacityUnits: 5,
+    WriteCapacityUnits: 5,
+  },
+  TableName: "users",
+};
 
- const agent = new https.Agent({
-    keepAlive: true,
-    keepAliveMsecs: 10000,
- });
+const namesdefs = {
+  AttributeDefinitions: [{ AttributeName: "id", AttributeType: "N" }],
+  KeySchema: [{ AttributeName: "id", KeyType: "HASH" }],
+  ProvisionedThroughput: {
+    ReadCapacityUnits: 5,
+    WriteCapacityUnits: 5,
+  },
+  TableName: "names",
+};
+
+const scoresdefs = {
+  AttributeDefinitions: [{ AttributeName: "id", AttributeType: "N" }],
+  KeySchema: [{ AttributeName: "id", KeyType: "HASH" }],
+  ProvisionedThroughput: {
+    ReadCapacityUnits: 5,
+    WriteCapacityUnits: 5,
+  },
+  TableName: "scores",
+};
+
+const agent = new https.Agent({
+  keepAlive: true,
+  keepAliveMsecs: 10000,
+});
  
- export const createDb = async (local : boolean) => {
-   if (!client) {
-     
+export const createDb = async (local : boolean) => {
+  
+  if (!client) {  
     if (local) {
-        client = new import_client_dynamodb.DynamoDBClient({endpoint: 'http://'+ process.env.DYNAMO_LOCAL_URL + ":" + process.env.DYNAMO_LOCAL_PORT});
-        docClient = import_lib_dynamodb.DynamoDBDocumentClient.from(client);
-        log(realm, source, "createDb", "connected to local");
-
+      client = new import_client_dynamodb.DynamoDBClient({endpoint: 'http://'+ process.env.DYNAMO_LOCAL_URL + ":" + process.env.DYNAMO_LOCAL_PORT});
+      docClient = import_lib_dynamodb.DynamoDBDocumentClient.from(client);
+      log(realm, source, "createDb", "connected to local");
     } else {
 
   //      //client = new DynamoDB({  httpOptions: {agent,},region: "us-east-1" });
@@ -72,28 +91,45 @@ let docClient = null
   //          }
   //        });
   //      }
-      }
     }
- };
+  }
+};
 
- export const cleanDb = async () => {
-   let tableNames = [];
-   
-     const command = new import_client_dynamodb.ListTablesCommand({});
-     const response = await client.send(command);
+export const cleanDb = async () => {
 
-     if ( ! response.TableNames.includes('islands')) {
-      const command = new import_client_dynamodb.CreateTableCommand(islandsdefs);
-      const response = await client.send(command);
-      log(realm, source, "cleanDb", "Table islands created", LOGINFO, LOGDATA);
-     }
-     
-     if ( ! response.TableNames.includes('users')) {
-      const command = new import_client_dynamodb.CreateTableCommand(usersdefs);
-      const response = await client.send(command);
-      log(realm, source, "cleanDb", "Table users created", LOGINFO, LOGDATA);
-     }
-  }  
+  let namesInitiated: boolean = true;
+
+  const command = new import_client_dynamodb.ListTablesCommand({});
+  const response = await client.send(command);
+
+  if ( ! response.TableNames.includes('islands')) {
+    const command = new import_client_dynamodb.CreateTableCommand(islandsdefs);
+    const response = await client.send(command);
+    log(realm, source, "cleanDb", "Table islands created", LOGINFO, LOGDATA);
+  }
+
+  if ( ! response.TableNames.includes('users')) {
+    const command = new import_client_dynamodb.CreateTableCommand(usersdefs);
+    const response = await client.send(command);
+    log(realm, source, "cleanDb", "Table users created", LOGINFO, LOGDATA);
+  }
+
+  if ( ! response.TableNames.includes('scores')) {
+    const command = new import_client_dynamodb.CreateTableCommand(scoresdefs);
+    const response = await client.send(command);
+    log(realm, source, "cleanDb", "Table islands created", LOGINFO, LOGDATA);
+  }
+
+  if ( ! response.TableNames.includes('names')) {
+    const command = new import_client_dynamodb.CreateTableCommand(namesdefs);
+    const response = await client.send(command);
+    namesInitiated = false;
+    log(realm, source, "cleanDb", "Table users created", LOGINFO, LOGDATA);
+  }
+
+  return namesInitiated;
+
+}  
 
  // adds an item in the DB based on the table name and the unique id
 
@@ -103,13 +139,13 @@ let docClient = null
 
    const command = new import_lib_dynamodb.PutCommand({
     TableName: TableName,
-    Item: marshall(anItem)
+    Item: anItem
   });
 
-  console.dir(command)
+  // console.dir(command)
 
   const response = await docClient.send(command);
-  console.log(response);
+ // console.log(response);
   return true;
    
   //  client.putItem(params, (err, data) => {
@@ -147,14 +183,13 @@ let docClient = null
     });
 
     const response = await docClient.send(command);
-    console.log(response);
     let cleanItem  = {};
 
     if ( response.Items ) {
         try {
           cleanItem = unmarshall(response.Items[0]);
         } catch {
-          console.log("==>>" + response.Items[0] + "<<")
+          log(realm, source, "getItem -> no deata found for id ", uniqueId, LOGINFO, LOGDATA);   
         }
     }
 

@@ -3,14 +3,13 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 // Class Implementation
 class Fish {
-    constructor(id, key, vpos, hpos, onHook, isDead, direction) {
+    constructor(id, key, vpos, hpos, onHook, isTaken) {
         this.id = id;
         this.key = key;
         this.vpos = vpos;
         this.hpos = hpos;
         this.onHook = onHook;
-        this.isDead = isDead;
-        this.direction = direction;
+        this.isTaken = isTaken;
     }
 }
 exports.default = Fish;

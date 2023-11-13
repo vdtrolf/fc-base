@@ -9,9 +9,25 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createUser = void 0;
-const createUser = (dbHelper, user) => __awaiter(void 0, void 0, void 0, function* () {
-    return yield dbHelper.putItem("users", user, user.id);
+exports.getUniqueKey = exports.getUniqueId = void 0;
+const getUniqueId = (dbHelper, prefix) => __awaiter(void 0, void 0, void 0, function* () {
+    let counter = 0;
+    let foundId = 0;
+    while (counter < 20) {
+        let testId = Math.floor(prefix * 1000 + Math.random() * 999);
+        const island = (yield dbHelper.getItem("islands", testId));
+        console.dir(island);
+        if (!island.id) {
+            foundId = testId;
+            break;
+        }
+        counter += 1;
+    }
+    return foundId;
 });
-exports.createUser = createUser;
-//# sourceMappingURL=createUser.js.map
+exports.getUniqueId = getUniqueId;
+const getUniqueKey = (prefix) => {
+    return Math.floor(prefix * 1000000000 + Math.random() * 999999999);
+};
+exports.getUniqueKey = getUniqueKey;
+//# sourceMappingURL=idsHelper.js.map

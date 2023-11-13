@@ -1,5 +1,5 @@
 import User from "../models/users";
 
-export const createUser = (dbHelper : any, user : User) => { 
-  return dbHelper.putItem("users",user, user.id);
+export const createUser = async (dbHelper : any, user : User) => { 
+  return await dbHelper.putItem("users",user, user.id);
 }

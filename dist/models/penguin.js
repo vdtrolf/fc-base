@@ -1,9 +1,10 @@
 "use strict";
-// External dependencies
 Object.defineProperty(exports, "__esModule", { value: true });
+const namesHelper_1 = require("../services/namesHelper");
+const constants_1 = require("../constants");
 // Class Implementation
 class Penguin {
-    constructor(id, key, vpos, hpos, alive, age, deadAge, hunger, temp, gender, name, activity, activityTime, activityTarget, activityDirection, activityText, goal, hasFish, hasGem) {
+    constructor(id, key, vpos, hpos, alive = true, age = Math.floor(Math.random() * 4), deadAge = 0, hunger = 0, temp = 0, gender = Math.floor(Math.random() * 2), name = (0, namesHelper_1.getPersonName)(gender), activity = constants_1.ACTIVITY_NONE, activityTime = 0, activityTarget = constants_1.DIRECTION_NONE, activityDirection = constants_1.DIRECTION_NONE, activityText = constants_1.DIRECTION_NAMES[activityDirection], goal = constants_1.DIRECTION_NONE, hasFish = false, hasGem = false) {
         this.id = id;
         this.key = key;
         this.vpos = vpos;

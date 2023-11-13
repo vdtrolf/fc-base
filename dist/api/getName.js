@@ -9,9 +9,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createUser = void 0;
-const createUser = (dbHelper, user) => __awaiter(void 0, void 0, void 0, function* () {
-    return yield dbHelper.putItem("users", user, user.id);
+exports.getName = void 0;
+const getName = (dbHelper, id) => __awaiter(void 0, void 0, void 0, function* () {
+    const name = (yield dbHelper.getItem("person_names", id));
+    return name;
 });
-exports.createUser = createUser;
-//# sourceMappingURL=createUser.js.map
+exports.getName = getName;
+//# sourceMappingURL=getName.js.map

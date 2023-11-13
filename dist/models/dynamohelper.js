@@ -64,6 +64,24 @@ const usersdefs = {
     },
     TableName: "users",
 };
+const namesdefs = {
+    AttributeDefinitions: [{ AttributeName: "id", AttributeType: "N" }],
+    KeySchema: [{ AttributeName: "id", KeyType: "HASH" }],
+    ProvisionedThroughput: {
+        ReadCapacityUnits: 5,
+        WriteCapacityUnits: 5,
+    },
+    TableName: "names",
+};
+const scoresdefs = {
+    AttributeDefinitions: [{ AttributeName: "id", AttributeType: "N" }],
+    KeySchema: [{ AttributeName: "id", KeyType: "HASH" }],
+    ProvisionedThroughput: {
+        ReadCapacityUnits: 5,
+        WriteCapacityUnits: 5,
+    },
+    TableName: "scores",
+};
 const agent = new https.Agent({
     keepAlive: true,
     keepAliveMsecs: 10000,
@@ -100,7 +118,7 @@ const createDb = (local) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.createDb = createDb;
 const cleanDb = () => __awaiter(void 0, void 0, void 0, function* () {
-    let tableNames = [];
+    let namesInitiated = true;
     const command = new import_client_dynamodb.ListTablesCommand({});
     const response = yield client.send(command);
     if (!response.TableNames.includes('islands')) {
@@ -113,6 +131,18 @@ const cleanDb = () => __awaiter(void 0, void 0, void 0, function* () {
         const response = yield client.send(command);
         (0, logger_1.log)(realm, source, "cleanDb", "Table users created", constants_1.LOGINFO, constants_1.LOGDATA);
     }
+    if (!response.TableNames.includes('scores')) {
+        const command = new import_client_dynamodb.CreateTableCommand(scoresdefs);
+        const response = yield client.send(command);
+        (0, logger_1.log)(realm, source, "cleanDb", "Table islands created", constants_1.LOGINFO, constants_1.LOGDATA);
+    }
+    if (!response.TableNames.includes('names')) {
+        const command = new import_client_dynamodb.CreateTableCommand(namesdefs);
+        const response = yield client.send(command);
+        namesInitiated = false;
+        (0, logger_1.log)(realm, source, "cleanDb", "Table users created", constants_1.LOGINFO, constants_1.LOGDATA);
+    }
+    return namesInitiated;
 });
 exports.cleanDb = cleanDb;
 // adds an item in the DB based on the table name and the unique id
@@ -120,11 +150,11 @@ const putItem = (TableName, anItem, uniqueId) => __awaiter(void 0, void 0, void 
     (0, logger_1.log)(realm, source, "putItem", anItem, constants_1.LOGINFO, constants_1.LOGDATA);
     const command = new import_lib_dynamodb.PutCommand({
         TableName: TableName,
-        Item: (0, util_dynamodb_1.marshall)(anItem)
+        Item: anItem
     });
-    console.dir(command);
+    // console.dir(command)
     const response = yield docClient.send(command);
-    console.log(response);
+    // console.log(response);
     return true;
     //  client.putItem(params, (err, data) => {
     //    if (err) {
@@ -157,14 +187,13 @@ const getItem = (tableName, uniqueId) => __awaiter(void 0, void 0, void 0, funct
         ConsistentRead: true,
     });
     const response = yield docClient.send(command);
-    console.log(response);
     let cleanItem = {};
     if (response.Items) {
         try {
             cleanItem = (0, util_dynamodb_1.unmarshall)(response.Items[0]);
         }
         catch (_a) {
-            console.log("==>>" + response.Items[0] + "<<");
+            (0, logger_1.log)(realm, source, "getItem -> no deata found for id ", uniqueId, constants_1.LOGINFO, constants_1.LOGDATA);
         }
     }
     (0, logger_1.log)(realm, source, "getItem result", response.Items[0], constants_1.LOGINFO, constants_1.LOGDATA);

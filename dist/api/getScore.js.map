@@ -1,0 +1,1 @@
+{"version":3,"file":"getScore.js","sourceRoot":"","sources":["../../src/api/getScore.ts"],"names":[],"mappings":";;;;;;;;;;;;AAEO,MAAM,QAAQ,GAAG,CAAO,QAAQ,EAAE,EAAE,EAAmB,EAAE;IAE9D,MAAM,KAAK,GAAW,CAAC,MAAM,QAAQ,CAAC,OAAO,CAAC,QAAQ,EAAC,EAAE,CAAC,CAAqB,CAAC;IAChF,OAAO,KAAK,CAAC;AACf,CAAC,CAAA,CAAA;AAJY,QAAA,QAAQ,YAIpB"}

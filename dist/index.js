@@ -33,6 +33,7 @@ const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const router_1 = require("./api/router");
 const logger_1 = require("./services/logger");
+const namesHelper_1 = require("./services/namesHelper");
 const constants_1 = require("./constants");
 (0, logger_1.setLogLevel)("db", constants_1.LOGINFO);
 const app = (0, express_1.default)();
@@ -44,8 +45,11 @@ console.log(">>>" + "./models/" + process.env.DBHELPER + " >>> " + port);
 (_a = "./models/" + process.env.DBHELPER, Promise.resolve().then(() => __importStar(require(_a)))).then((module) => {
     module.createDb(local)
         .then(() => {
-        console.dir(module.cleanDb());
+        let namesInitiated = module.cleanDb();
         (0, router_1.setDbHelper)(module);
+        if (!namesInitiated) {
+            (0, namesHelper_1.initiateNames)();
+        }
         app.use("/", router_1.flashRouter);
         app.listen(port, () => {
             console.log(`Server started at http://localhost:${port}` + path);
