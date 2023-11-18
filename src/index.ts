@@ -8,15 +8,12 @@ import { setLogLevel } from "./services/logger";
 import {initiateNames} from "./services/namesHelper"
 import { LOGINFO } from "./constants";
 
-
 setLogLevel ("db", LOGINFO)
 
 const app = express();
 app.use(cors());
 const port = process.env.EXPRESSPORT; // default port to listen
 const path = process.env.API_PATH; // default port to listen
-
-
 const local = process.env.DB_ENVIRONMENT === "local"
 
 console.log(">>>" + "./models/" + process.env.DBHELPER + " >>> " + port)
