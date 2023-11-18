@@ -12,6 +12,7 @@ setLogLevel ("db", LOGINFO)
 
 const app = express();
 app.use(cors());
+
 const port = process.env.EXPRESSPORT; // default port to listen
 const path = process.env.API_PATH; // default port to listen
 const local = process.env.DB_ENVIRONMENT === "local"
