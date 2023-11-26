@@ -1,7 +1,7 @@
 // External dependencies
-import { setLogLevel } from "../services/logger";
-import { getPersonName } from "../services/namesHelper"
-import { LOGINFO, ACTIVITY_NONE, DIRECTION_NONE, DIRECTION_NAMES} from "../constants";
+import { setLogLevel } from "../../helpers/logger";
+import { getPersonName } from "../../helpers/namesHelper"
+import { LOGINFO, ACTIVITY_NONE, DIRECTION_NONE, DIRECTION_NAMES} from "../../constants";
 
 // Class Implementation
 export default class Penguin {

@@ -1,4 +1,4 @@
-import Island from "../models/island";
+import Island from "../model/island";
 
 
 export const getIsland = async (dbHelper, id) : Promise<Island> => {

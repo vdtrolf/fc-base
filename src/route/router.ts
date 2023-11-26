@@ -3,24 +3,24 @@ import * as dotenv from 'dotenv'
 dotenv.config()
 
 import express, { Request, Response } from "express";
-import User from "../models/users";
-import {getNamesList} from "./getNamesList"
-import {getName} from "./getName"
-import {createName} from "./createName"
-import Name from "../models/name";
-import {getScoresList} from "./getScoresList"
-import {getScore} from "./getScore"
-import {createScore} from "./createScore"
-import Score from "../models/score";
-import {getUsersList} from "./getUsersList"
-import {getUser} from "./getUser"
-import {createUser} from "./createUser"
-import Island from "../models/island";
-import {getIslandsList} from "./getIslandsList"
-import {getIsland} from "./getIsland"
-import {createIsland} from "./createIsland"
+import User from "../data/model/users";
+import {getNamesList} from "../data/repository/getNamesList"
+import {getName} from "../data/repository/getName"
+import {createName} from "../data/repository/createName"
+import Name from "../data/model/name";
+import {getScoresList} from "../data/repository/getScoresList"
+import {getScore} from "../data/repository/getScore"
+import {createScore} from "../data/repository/createScore"
+import Score from "../data/model/score";
+import {getUsersList} from "../data/repository/getUsersList"
+import {getUser} from "../data/repository/getUser"
+import {createUser} from "../data/repository/createUser"
+import Island from "../data/model/island";
+import {getIslandsList} from "../data/repository/getIslandsList"
+import {getIsland} from "../data/repository/getIsland"
+import {createIsland} from "../data/repository/createIsland"
 
-import { getUniqueId,getUniqueKey } from '../services/idsHelper';
+import { getUniqueId,getUniqueKey } from '../helpers/idsHelper';
 
 // Constants
 

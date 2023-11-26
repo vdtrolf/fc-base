@@ -1,4 +1,4 @@
-import Score from "../models/score";
+import Score from "../model/score";
 
 export const getScore = async (dbHelper, id) : Promise<Score> => {
 

@@ -3,9 +3,9 @@ dotenv.config()
 
 import express from "express";
 import cors from "cors";
-import { flashRouter, setDbHelper } from "./api/router";
-import { setLogLevel } from "./services/logger";
-import {initiateNames} from "./services/namesHelper"
+import { flashRouter, setDbHelper } from "./route/router";
+import { setLogLevel } from "./helpers/logger";
+import {initiateNames} from "./helpers/namesHelper"
 import { LOGINFO } from "./constants";
 
 setLogLevel ("db", LOGINFO)
@@ -17,9 +17,9 @@ const port = process.env.EXPRESSPORT; // default port to listen
 const path = process.env.API_PATH; // default port to listen
 const local = process.env.DB_ENVIRONMENT === "local"
 
-console.log(">>>" + "./models/" + process.env.DBHELPER + " >>> " + port)
+console.log(">>>" + "./helpers/" + process.env.DBHELPER + " >>> " + port)
 
-import ("./models/" + process.env.DBHELPER)
+import ("./helpers/" + process.env.DBHELPER)
     .then((module) => {
         module.createDb(local)
         .then(() => {

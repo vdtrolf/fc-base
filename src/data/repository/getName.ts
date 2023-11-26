@@ -1,4 +1,4 @@
-import Name from "../models/name";
+import Name from "../model/name";
 
 
 export const getName = async (dbHelper, id) : Promise<Name> => {

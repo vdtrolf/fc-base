@@ -1,4 +1,4 @@
-import Island from "../models/island";
+import Island from "../data/model/island";
 
 export const getUniqueId = async (dbHelper: any, prefix:number) : Promise<number> => {
     
