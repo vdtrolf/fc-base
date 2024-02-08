@@ -17,9 +17,9 @@ const port = process.env.EXPRESSPORT; // default port to listen
 const path = process.env.API_PATH; // default port to listen
 const local = process.env.DB_ENVIRONMENT === "local"
 
-console.log(">>>" + "./models/" + process.env.DBHELPER + " >>> " + port)
+console.log(">>>" + "./services/" + process.env.DBHELPER + " >>> " + port)
 
-import ("./models/" + process.env.DBHELPER)
+import ("./services/" + process.env.DBHELPER)
     .then((module) => {
         module.createDb(local)
         .then(() => {

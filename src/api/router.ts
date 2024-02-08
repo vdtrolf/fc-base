@@ -30,7 +30,7 @@ import { PREFIX_ISLAND } from '../constants';
 
 let dbHelper : any = null;
 
-export const setDbHelper = (module) => {
+export const setDbHelper = (module:any) => {
     dbHelper = module;
 }
 
@@ -209,7 +209,7 @@ flashRouter.get(path + "/islands/:id", async (req: Request, res: Response) => {
     }
 });
 
-// POST ISLAND
+// CREATR ISLAND (POST)
 
 flashRouter.post(path + "/islands/", async (req: Request, res: Response) => {
     

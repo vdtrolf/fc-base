@@ -9,7 +9,7 @@
     "types": [
       // ... your other types
       "node"
-    ],
+    ]
   },
   "include": [
     "src/**/*"

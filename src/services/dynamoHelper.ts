@@ -2,7 +2,7 @@ import { marshall, unmarshall } from '@aws-sdk/util-dynamodb';
 import * as dotenv from 'dotenv' 
 import * as https from 'https';
 
-import { log } from "../services/logger"
+import { log } from "./logger"
 import { LOGINFO, LOGERR, LOGDATA } from "../constants"
 dotenv.config()
 
