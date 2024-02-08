@@ -69,6 +69,7 @@ const path = process.env.API_PATH;
 // GET NAME
 exports.flashRouter.get(path + "/create", (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        console.log(">>>>>>>>>>> 0 >>>>>>>>>>>>>");
         const uniqueId = yield (0, idsHelper_1.getUniqueId)(dbHelper, constants_1.PREFIX_ISLAND);
         const uniqueKey = (0, idsHelper_1.getUniqueKey)(constants_1.PREFIX_ISLAND);
         const island = new island_1.default(uniqueId, uniqueKey);
@@ -76,6 +77,7 @@ exports.flashRouter.get(path + "/create", (_req, res) => __awaiter(void 0, void 
         res.status(200).send(island);
     }
     catch (error) {
+        console.error(error);
         res.status(500).send(error.message);
     }
 }));

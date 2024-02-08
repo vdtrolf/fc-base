@@ -17,7 +17,7 @@ const getUniqueId = (dbHelper, prefix) => __awaiter(void 0, void 0, void 0, func
         let testId = Math.floor(prefix * 1000 + Math.random() * 999);
         const island = (yield dbHelper.getItem("islands", testId));
         console.dir(island);
-        if (!island.id) {
+        if (!island) {
             foundId = testId;
             break;
         }

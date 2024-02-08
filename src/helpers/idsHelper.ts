@@ -9,7 +9,7 @@ export const getUniqueId = async (dbHelper: any, prefix:number) : Promise<number
         let testId = Math.floor(prefix * 1000 + Math.random() * 999);
         const island : Island = (await dbHelper.getItem("islands",testId)) as unknown as Island;
         console.dir(island)
-        if ( ! island.id ) {
+        if ( ! island ) {
             foundId = testId;
             break;
         }

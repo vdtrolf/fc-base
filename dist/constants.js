@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.letters = exports.weathers = exports.activity_names = exports.DIRECTION_NAMES = exports.MOVES = exports.DIRECTION_DOWN = exports.DIRECTION_UP = exports.DIRECTION_RIGHT = exports.DIRECTION_LEFT = exports.DIRECTION_NONE = exports.ACTIVITY_DEAD = exports.ACTIVITY_FLEE = exports.ACTIVITY_CLEANING = exports.ACTIVITY_MOVING = exports.ACTIVITY_BUILDING = exports.ACTIVITY_GETING = exports.ACTIVITY_LOVING = exports.ACTIVITY_FISHING = exports.ACTIVITY_EATING = exports.ACTIVITY_NONE = exports.FISH_LETARGY = exports.WEATHER_SNOW = exports.WEATHER_COLD = exports.WEATHER_SUN = exports.WEATHER_RAIN = exports.PROBABILITY_RISE = exports.PROBABILITY_SMELT = exports.NAME_TYPE_ISLAND = exports.NAME_TYPE_PERSON = exports.PREFIX_GARBAGE = exports.PREFIX_GEM = exports.PREFIX_FISH = exports.PREFIX_PENGUIN = exports.PREFIX_ISLAND = exports.BOARDSIZE = exports.LOGDUMP = exports.LOGDATA = exports.LOGTEXT = exports.LOGALL = exports.LOGERR = exports.LOGINFO = exports.LOGVERB = void 0;
+exports.letters = exports.weathers = exports.activity_names = exports.DIRECTION_NAMES = exports.MOVES = exports.DIRECTION_DOWN = exports.DIRECTION_UP = exports.DIRECTION_RIGHT = exports.DIRECTION_LEFT = exports.DIRECTION_NONE = exports.ACTIVITY_DEAD = exports.ACTIVITY_FLEE = exports.ACTIVITY_CLEANING = exports.ACTIVITY_MOVING = exports.ACTIVITY_BUILDING = exports.ACTIVITY_GETING = exports.ACTIVITY_LOVING = exports.ACTIVITY_FISHING = exports.ACTIVITY_EATING = exports.ACTIVITY_NONE = exports.FISH_LETARGY = exports.WEATHER_SNOW = exports.WEATHER_COLD = exports.WEATHER_SUN = exports.WEATHER_RAIN = exports.PROBABILITY_RISE = exports.PROBABILITY_SMELT = exports.NAME_TYPE_ISLAND = exports.NAME_TYPE_PERSON = exports.PREFIX_CELL = exports.PREFIX_GARBAGE = exports.PREFIX_GEM = exports.PREFIX_FISH = exports.PREFIX_PENGUIN = exports.PREFIX_ISLAND = exports.BOARDSIZE = exports.LOGDUMP = exports.LOGDATA = exports.LOGTEXT = exports.LOGALL = exports.LOGERR = exports.LOGINFO = exports.LOGVERB = void 0;
 exports.LOGVERB = 0;
 exports.LOGINFO = 1;
 exports.LOGERR = 2;
@@ -14,6 +14,7 @@ exports.PREFIX_PENGUIN = 2;
 exports.PREFIX_FISH = 3;
 exports.PREFIX_GEM = 4;
 exports.PREFIX_GARBAGE = 5;
+exports.PREFIX_CELL = 6;
 exports.NAME_TYPE_PERSON = 1;
 exports.NAME_TYPE_ISLAND = 9;
 exports.PROBABILITY_SMELT = 3;

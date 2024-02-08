@@ -46,6 +46,9 @@ const path = process.env.API_PATH ;
 flashRouter.get(path + "/create", async (_req: Request, res: Response) => {
     
     try {
+
+        console.log(">>>>>>>>>>> 0 >>>>>>>>>>>>>")
+
         const uniqueId = await getUniqueId(dbHelper,PREFIX_ISLAND)
         const uniqueKey = getUniqueKey(PREFIX_ISLAND)
 
@@ -54,6 +57,7 @@ flashRouter.get(path + "/create", async (_req: Request, res: Response) => {
 
         res.status(200).send(island);
     } catch (error) {
+        console.error(error)
         res.status(500).send(error.message);
     }
 });
