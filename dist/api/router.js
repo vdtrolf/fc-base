@@ -213,7 +213,7 @@ exports.flashRouter.get(path + "/islands/:id", (req, res) => __awaiter(void 0, v
         res.status(404).send(`Unable to find matching island with id: ${req.params.id}`);
     }
 }));
-// POST ISLAND
+// CREATR ISLAND (POST)
 exports.flashRouter.post(path + "/islands/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const island = req.body;
