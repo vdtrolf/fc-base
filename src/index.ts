@@ -3,9 +3,9 @@ dotenv.config()
 
 import express from "express";
 import cors from "cors";
-import { flashRouter, setDbHelper } from "./api/router";
-import { setLogLevel } from "./services/logger";
-import {initiateNames} from "./services/namesHelper"
+import { flashRouter, setDbHelper } from "./route/router";
+import { setLogLevel } from "./helpers/logger";
+import {initiateNames} from "./helpers/namesHelper"
 import { LOGINFO } from "./constants";
 
 setLogLevel ("db", LOGINFO)

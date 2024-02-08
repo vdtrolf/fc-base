@@ -5,10 +5,10 @@ import Fish from "./fish";
 import Penguin from "./penguin";
 import Cell from "./name";
 
-import { setLogLevel } from "../services/logger";
-import { getIslandName } from "../services/namesHelper"
-import { getUniqueId,getUniqueKey } from '../services/idsHelper';
-import { LOGINFO, BOARDSIZE, PREFIX_PENGUIN } from "../constants";
+import { setLogLevel } from "../../helpers/logger";
+import { getIslandName } from "../../helpers/namesHelper"
+import { getUniqueId,getUniqueKey } from '../../helpers/idsHelper';
+import { LOGINFO, BOARDSIZE, PREFIX_PENGUIN } from "../../constants";
 
 
 // Class Implementation

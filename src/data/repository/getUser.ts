@@ -1,4 +1,4 @@
-import User from "../models/users";
+import User from "../model/users";
 
 
 export const getUser = async (dbHelper, id) : Promise<User> => {
