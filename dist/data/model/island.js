@@ -3,6 +3,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const garbage_1 = __importDefault(require("./garbage"));
+const fish_1 = __importDefault(require("./fish"));
 const penguin_1 = __importDefault(require("./penguin"));
 const cell_1 = __importDefault(require("./cell"));
 const namesHelper_1 = require("../../helpers/namesHelper");
@@ -10,13 +12,14 @@ const idsHelper_1 = require("../../helpers/idsHelper");
 const constants_1 = require("../../constants");
 // Class Implementation
 class Island {
-    constructor(id, key, size = constants_1.BOARDSIZE, name = (0, namesHelper_1.getIslandName)(), counter = 0, weather = Math.floor(Math.random() * 4), evolutionSpeed = 1, onGoing = true, penguins = [], fishes = [], gems = [], garbages = [], cells = []) {
+    constructor(id, key, size = constants_1.BOARDSIZE, name = (0, namesHelper_1.getIslandName)(), counter = 0, weather = Math.floor(Math.random() * 4), year = 2000, evolutionSpeed = 1, onGoing = true, penguins = {}, fishes = {}, gems = {}, garbages = {}, cells = []) {
         this.id = id;
         this.key = key;
         this.size = size;
         this.name = name;
         this.counter = counter;
         this.weather = weather;
+        this.year = year;
         this.evolutionSpeed = evolutionSpeed;
         this.onGoing = onGoing;
         this.penguins = penguins;
@@ -24,8 +27,9 @@ class Island {
         this.gems = gems;
         this.garbages = garbages;
         this.cells = cells;
+        // Builds a random island of give size with penguins, fishes and garbage 
+        //
         this.build_island = (size) => {
-            console.log(">>>>>>> 2 >>>>>>>>>");
             //build islands in the world
             let tmpland = [];
             for (let i = 0; i < size; i++) {
@@ -80,34 +84,42 @@ class Island {
                 }
                 this.cells.push(tmplane);
             }
-            // # add some penguins
-            // cntpenguins=0
-            // while cntpenguins < size / 2 :
-            //     v = random.randint(1,size-2)
-            //     h = random.randint(1,size-2)
-            //     if self.cells[v][h].isGround() and not self.penguins.get(v*100+h):
-            //         self.penguins[v*100+h]=Penguin(cntpenguins + 1,v,h)
-            //         cntpenguins +=1
-            // # add some garbage
-            // cntgarbages=0
-            // while cntgarbages < size / 4 :
-            //     v = random.randint(0,size-1)
-            //     h = random.randint(0,size-1)
-            //     if self.cells[v][h].isSea() and (v == 0 or v == size-1 or h==0 or h == size-1):
-            //         self.garbages[v*100+h]=Garbage(v,h)
-            //         cntgarbages +=1
-            // # add some fishes
-            // cntfishes=0
-            // while cntfishes < size / 2 :
-            //     v = random.randint(0,size-1)
-            //     h = random.randint(0,size-1)
-            //     if self.cells[v][h].isSea():
-            //         self.fishes[v*100+h]=Fish(v,h)
-            //         cntfishes +=1
+            // add some penguins
+            let cntpenguins = 0;
+            while (cntpenguins < size / 2) {
+                let v = Math.floor(Math.random() * (size - 2));
+                let h = Math.floor(Math.random() * (size - 2));
+                if (this.cells[v][h].isGround() && !this.penguins[v * 100 + h]) {
+                    const uniqueKey = (0, idsHelper_1.getUniqueKey)(constants_1.PREFIX_PENGUIN);
+                    this.penguins[v * 100 + h] = new penguin_1.default(1, uniqueKey, v, h);
+                    cntpenguins += 1;
+                }
+            }
+            // add some garbage
+            let cntgarbages = 0;
+            while (cntgarbages < size / 4) {
+                let v = Math.floor(Math.random() * (size - 1));
+                let h = Math.floor(Math.random() * (size - 1));
+                if (this.cells[v][h].isSea() && (v == 0 || v == size - 1 || h == 0 || h == size - 1)) {
+                    const uniqueKey = (0, idsHelper_1.getUniqueKey)(constants_1.PREFIX_GARBAGE);
+                    this.garbages[v * 100 + h] = new garbage_1.default(1, uniqueKey, v, h);
+                    cntgarbages += 1;
+                }
+            }
+            // add some fishes
+            let cntfishes = 0;
+            while (cntfishes < size / 2) {
+                let v = Math.floor(Math.random() * (size - 1));
+                let h = Math.floor(Math.random() * (size - 1));
+                if (this.cells[v][h].isSea() && !this.garbages[v * 100 + h] && !this.fishes[v * 100 + h]) {
+                    const uniqueKey = (0, idsHelper_1.getUniqueKey)(constants_1.PREFIX_FISH);
+                    this.fishes[v * 100 + h] = new fish_1.default(1, uniqueKey, v, h);
+                    cntfishes += 1;
+                }
+            }
         };
-        console.log(">>>>>>>> 1 >>>>>>>>>");
         const uniqueKey = (0, idsHelper_1.getUniqueKey)(constants_1.PREFIX_PENGUIN);
-        this.penguins.push(new penguin_1.default(1, uniqueKey, 2, 3));
+        // this.penguins.push(new Penguin(1,uniqueKey,2,3));
         this.build_island(this.size);
         console.log("@@@@@ island created wikth name " + this.name);
     }

@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 // Class Implementation
 class Fish {
-    constructor(id, key, vpos, hpos, onHook, isTaken) {
+    constructor(id, key, vpos, hpos, onHook = false, isTaken = false) {
         this.id = id;
         this.key = key;
         this.vpos = vpos;

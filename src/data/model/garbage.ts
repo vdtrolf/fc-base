@@ -7,6 +7,6 @@ export default class Garbage {
         public key : number,
         public vpos : number,
         public hpos : number,
-        public kind : number, 
-        public isTaken : boolean) {}
+        public kind : number = Math.floor(Math.random() * 4), 
+        public isTaken : boolean = false) {}
 }

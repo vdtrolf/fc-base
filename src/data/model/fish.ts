@@ -7,6 +7,6 @@ export default class Fish {
         public key : number,
         public vpos : number,
         public hpos : number,
-        public onHook : boolean, 
-        public isTaken : boolean) {}
+        public onHook : boolean = false, 
+        public isTaken : boolean = false) {}
 }

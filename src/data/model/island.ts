@@ -8,7 +8,7 @@ import Cell from "./cell";
 import { setLogLevel } from "../../helpers/logger";
 import { getIslandName } from "../../helpers/namesHelper"
 import { getUniqueId,getUniqueKey } from '../../helpers/idsHelper';
-import { LOGINFO, BOARDSIZE, PREFIX_PENGUIN, PREFIX_CELL } from "../../constants";
+import { LOGINFO, BOARDSIZE, PREFIX_PENGUIN, PREFIX_CELL, PREFIX_GARBAGE, PREFIX_FISH } from "../../constants";
 
 
 // Class Implementation
@@ -20,28 +20,27 @@ export default class Island {
         public name : string = getIslandName(),
         public counter : number = 0,
         public weather : number = Math.floor(Math.random() * 4),
+        public year : number = 2000,
         public evolutionSpeed : number = 1,
         public onGoing : boolean = true,
-        public penguins : Penguin[] = [],
-        public fishes : Fish[] = [],
-        public gems : Gem[] = [],
-        public garbages : Garbage[] = [],
+        public penguins : {} = {},
+        public fishes : {} = {},
+        public gems : {} = {},
+        public garbages : {} = {},
         public cells : any[] = [] ) {
-
-            console.log(">>>>>>>> 1 >>>>>>>>>")
           
             const uniqueKey = getUniqueKey(PREFIX_PENGUIN)
 
-            this.penguins.push(new Penguin(1,uniqueKey,2,3));
+            // this.penguins.push(new Penguin(1,uniqueKey,2,3));
             this.build_island(this.size)
 
             console.log("@@@@@ island created wikth name " + this.name)
         }
 
+        // Builds a random island of give size with penguins, fishes and garbage 
+        //
 
         build_island = (size : number) => {
-
-            console.log(">>>>>>> 2 >>>>>>>>>")
 
             //build islands in the world
             let tmpland = []
@@ -97,34 +96,45 @@ export default class Island {
                 }
                 this.cells.push(tmplane)
             }
-
-                        
-                // # add some penguins
-                // cntpenguins=0
-                // while cntpenguins < size / 2 :
-                //     v = random.randint(1,size-2)
-                //     h = random.randint(1,size-2)
-                //     if self.cells[v][h].isGround() and not self.penguins.get(v*100+h):
-                //         self.penguins[v*100+h]=Penguin(cntpenguins + 1,v,h)
-                //         cntpenguins +=1
+            
+            // add some penguins
+            let cntpenguins=0
+            while (cntpenguins < size / 2) {
+                let v = Math.floor(Math.random() * (size-2))
+                let h = Math.floor(Math.random() * (size-2))
+                
+                if (this.cells[v][h].isGround() && ! this.penguins[v*100+h]) {
+                    const uniqueKey = getUniqueKey(PREFIX_PENGUIN)
+                    this.penguins[v*100 + h] = new Penguin(1,uniqueKey,v,h);
+                    cntpenguins +=1
+                }
+            }
         
-                // # add some garbage
-                // cntgarbages=0
-                // while cntgarbages < size / 4 :
-                //     v = random.randint(0,size-1)
-                //     h = random.randint(0,size-1)
-                //     if self.cells[v][h].isSea() and (v == 0 or v == size-1 or h==0 or h == size-1):
-                //         self.garbages[v*100+h]=Garbage(v,h)
-                //         cntgarbages +=1
+            // add some garbage
+            let cntgarbages=0
+            while (cntgarbages < size / 4) {
+                let v = Math.floor(Math.random() * (size-1))
+                let h = Math.floor(Math.random() * (size-1))
+                
+                if (this.cells[v][h].isSea() && (v == 0 || v == size-1 || h==0 || h == size-1)) {
+                    const uniqueKey = getUniqueKey(PREFIX_GARBAGE)
+                    this.garbages[v*100 + h] = new Garbage(1,uniqueKey,v,h);
+                    cntgarbages +=1
+                }
+            }
                         
-                // # add some fishes
-                // cntfishes=0
-                // while cntfishes < size / 2 :
-                //     v = random.randint(0,size-1)
-                //     h = random.randint(0,size-1)
-                //     if self.cells[v][h].isSea():
-                //         self.fishes[v*100+h]=Fish(v,h)
-                //         cntfishes +=1
+            // add some fishes
+            let cntfishes=0
+            while (cntfishes < size / 2) {
+                let v = Math.floor(Math.random() * (size-1))
+                let h = Math.floor(Math.random() * (size-1))
+                
+                if (this.cells[v][h].isSea() && !this.garbages[v*100+h] && !this.fishes[v*100+h]) {
+                    const uniqueKey = getUniqueKey(PREFIX_FISH)
+                    this.fishes[v*100 + h] = new Fish(1,uniqueKey,v,h);
+                    cntfishes +=1
+                }
+            }
         }
 
 }

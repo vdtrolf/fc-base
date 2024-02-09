@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 // Class Implementation
 class Garbage {
-    constructor(id, key, vpos, hpos, kind, isTaken) {
+    constructor(id, key, vpos, hpos, kind = Math.floor(Math.random() * 4), isTaken = false) {
         this.id = id;
         this.key = key;
         this.vpos = vpos;

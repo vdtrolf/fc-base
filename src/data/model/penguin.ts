@@ -21,7 +21,7 @@ export default class Penguin {
         public activityTime : number = 0, 
         public activityTarget : number = DIRECTION_NONE, 
         public activityDirection: number = DIRECTION_NONE,
-        public activityText: string = DIRECTION_NAMES[activityDirection],
+        public activityText: string = '', // DIRECTION_NAMES[activityDirection],
         public goal: number = DIRECTION_NONE,
         public hasFish: boolean = false,
         public hasGem: boolean = false) {
