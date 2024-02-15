@@ -42,7 +42,7 @@ const port = process.env.EXPRESSPORT; // default port to listen
 const path = process.env.API_PATH; // default port to listen
 const local = process.env.DB_ENVIRONMENT === "local";
 console.log(">>>" + "./services/" + process.env.DBHELPER + " >>> " + port);
-(_a = "./services/" + process.env.DBHELPER, Promise.resolve().then(() => __importStar(require(_a)))).then((module) => {
+(_a = "./helpers/" + process.env.DBHELPER, Promise.resolve().then(() => __importStar(require(_a)))).then((module) => {
     module.createDb(local)
         .then(() => {
         let namesInitiated = module.cleanDb();

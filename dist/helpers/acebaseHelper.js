@@ -19,8 +19,8 @@ let db = null;
 const debug = false;
 const createDb = (local) => __awaiter(void 0, void 0, void 0, function* () {
     if (db === null) {
-        const options = { logLevel: "err" }; //   'verbose'};
-        db = new acebase_1.AceBase("my_db");
+        const options = { logLevel: "error", logColors: null, info: '', sponsor: false }; //   'verbose'};
+        db = new acebase_1.AceBase("my_db", options);
     }
 });
 exports.createDb = createDb;
@@ -37,9 +37,9 @@ const putItem = (tableName, Item, uniqueId) => {
         uniqueId, constants_1.LOGINFO, constants_1.LOGDATA);
     if (db && db.ready()) {
         db.ref(`${tableName}/${uniqueId}`).set(Item);
-        console.log("================ put ======");
-        console.dir(Item);
-        console.log("================ put ======");
+        // console.log("================ put ======");
+        // console.dir(Item);
+        // console.log("================ put ======");
         return true;
     }
     else {
@@ -78,9 +78,9 @@ const getAsyncItems = (tableName, filterIdx = "id", filterComparator = ">", filt
             // .take(50)
             .filter(filterIdx, filterComparator, filterVal)
             .get();
-        console.log("================ getAsyncItems ======");
-        console.dir(snapshots.getValues());
-        console.log("================ getAsyncItems ======");
+        // console.log("================ getAsyncItems ======");
+        // console.dir(snapshots.getValues());
+        // console.log("================ getAsyncItems ======");
         return snapshots.getValues();
     }
     else {

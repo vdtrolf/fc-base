@@ -1,1 +1,0 @@
-{"version":3,"file":"getPenguinsList.js","sourceRoot":"","sources":["../../src/api/getPenguinsList.ts"],"names":[],"mappings":";;;;;;;;;;;;AACO,MAAM,eAAe,GAAG,CAAO,QAAQ,EAAE,EAAE;IAE9C,MAAM,QAAQ,GAAG,CAAC,MAAM,QAAQ,CAAC,aAAa,CAAC,UAAU,CAAC,CAAY,CAAE;IACxE,OAAO,QAAQ,CAAC;AAElB,CAAC,CAAA,CAAA;AALU,QAAA,eAAe,mBAKzB"}

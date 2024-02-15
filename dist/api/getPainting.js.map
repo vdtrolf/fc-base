@@ -1,1 +1,0 @@
-{"version":3,"file":"getPainting.js","sourceRoot":"","sources":["../../src/api/getPainting.ts"],"names":[],"mappings":";;;;;;;;;;;;AAGO,MAAM,WAAW,GAAG,CAAO,QAAQ,EAAE,EAAE,EAAsB,EAAE;IAEpE,MAAM,QAAQ,GAAc,CAAC,MAAM,QAAQ,CAAC,OAAO,CAAC,WAAW,EAAC,EAAE,CAAC,CAAwB,CAAC;IAC5F,OAAO,QAAQ,CAAC;AAClB,CAAC,CAAA,CAAA;AAJY,QAAA,WAAW,eAIvB"}

@@ -1,1 +1,0 @@
-{"version":3,"file":"getSignature.js","sourceRoot":"","sources":["../../src/api/getSignature.ts"],"names":[],"mappings":";;;;;;;;;;;;AAGO,MAAM,YAAY,GAAG,CAAO,QAAQ,EAAE,EAAE,EAAuB,EAAE;IAEtE,MAAM,SAAS,GAAe,CAAC,MAAM,QAAQ,CAAC,OAAO,CAAC,YAAY,EAAC,EAAE,CAAC,CAAyB,CAAC;IAChG,OAAO,SAAS,CAAC;AACnB,CAAC,CAAA,CAAA;AAJY,QAAA,YAAY,gBAIxB"}

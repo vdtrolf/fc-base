@@ -49,13 +49,10 @@ const createScore_1 = require("../data/repository/createScore");
 const getUsersList_1 = require("../data/repository/getUsersList");
 const getUser_1 = require("../data/repository/getUser");
 const createUser_1 = require("../data/repository/createUser");
-const island_1 = __importDefault(require("../data/model/island"));
 const getIslandsList_1 = require("../data/repository/getIslandsList");
 const getIsland_1 = require("../data/repository/getIsland");
 const createIsland_1 = require("../data/repository/createIsland");
-const idsHelper_1 = require("../helpers/idsHelper");
-// Constants
-const constants_1 = require("../constants");
+const islandControler_1 = require("../controller/islandControler");
 // Set de db helper, which can be i.e. acebase or DynamoDB
 let dbHelper = null;
 const setDbHelper = (module) => {
@@ -69,11 +66,12 @@ const path = process.env.API_PATH;
 // GET NAME
 exports.flashRouter.get(path + "/create", (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        console.log(">>>>>>>>>>> 0 >>>>>>>>>>>>>");
-        const uniqueId = yield (0, idsHelper_1.getUniqueId)(dbHelper, constants_1.PREFIX_ISLAND);
-        const uniqueKey = (0, idsHelper_1.getUniqueKey)(constants_1.PREFIX_ISLAND);
-        const island = new island_1.default(uniqueId, uniqueKey);
-        dbHelper.putItem("islands", island, island.id);
+        const size = _req === null || _req === void 0 ? void 0 : _req.query.size;
+        const difficulty = _req === null || _req === void 0 ? void 0 : _req.query.difficulty;
+        let island = yield (0, islandControler_1.buildIsland)(dbHelper, size, difficulty);
+        // console.log("============ Island ===================")
+        // console.dir(island)
+        // console.log("=======================================")
         res.status(200).send(island);
     }
     catch (error) {
@@ -209,6 +207,40 @@ exports.flashRouter.get(path + "/islands/:id", (req, res) => __awaiter(void 0, v
         const island = (yield (0, getIsland_1.getIsland)(dbHelper, id));
         if (island) {
             res.status(200).send(island);
+        }
+    }
+    catch (error) {
+        res.status(404).send(`Unable to find matching island with id: ${req.params.id}`);
+    }
+}));
+exports.flashRouter.get(path + "/refresh/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _e, _f;
+    console.log(">>>>>>>>>>> refresh >>>>>>>>>>>>>" + ((_e = req === null || req === void 0 ? void 0 : req.params) === null || _e === void 0 ? void 0 : _e.id) + "<<");
+    const id = (_f = req === null || req === void 0 ? void 0 : req.params) === null || _f === void 0 ? void 0 : _f.id;
+    try {
+        const island = (yield (0, getIsland_1.getIsland)(dbHelper, id));
+        if (island) {
+            let anIsland = yield (0, islandControler_1.becomeOlder)(dbHelper, island);
+            res.status(200).send(anIsland);
+        }
+    }
+    catch (error) {
+        res.status(404).send(`Unable to find matching island with id: ${req.params.id}`);
+    }
+}));
+exports.flashRouter.get(path + "/command/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _g, _h;
+    console.log(">>>>>>>>>>> command >>>>>>>>>>>>>" + ((_g = req === null || req === void 0 ? void 0 : req.params) === null || _g === void 0 ? void 0 : _g.id) + "<<");
+    const id = (_h = req === null || req === void 0 ? void 0 : req.params) === null || _h === void 0 ? void 0 : _h.id;
+    try {
+        const island = (yield (0, getIsland_1.getIsland)(dbHelper, id));
+        const penguinId = req === null || req === void 0 ? void 0 : req.query.penguinId;
+        const command1 = req === null || req === void 0 ? void 0 : req.query.command1;
+        const command2 = req === null || req === void 0 ? void 0 : req.query.command2;
+        if (island) {
+            (0, islandControler_1.transmitCommands)(island, penguinId, [command1, command2]);
+            let anIsland = yield (0, islandControler_1.becomeOlder)(dbHelper, island);
+            res.status(200).send(anIsland);
         }
     }
     catch (error) {

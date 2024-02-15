@@ -1,1 +1,0 @@
-{"version":3,"file":"getCardsetsList.js","sourceRoot":"","sources":["../../src/api/getCardsetsList.ts"],"names":[],"mappings":";;;;;;;;;;;;AACO,MAAM,eAAe,GAAG,CAAO,QAAQ,EAAE,EAAE;IAEhD,MAAM,QAAQ,GAAG,CAAC,MAAM,QAAQ,CAAC,aAAa,CAAC,UAAU,CAAC,CAAY,CAAE;IACxE,OAAO,QAAQ,CAAC;AAElB,CAAC,CAAA,CAAA;AALY,QAAA,eAAe,mBAK3B"}
