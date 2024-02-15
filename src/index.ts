@@ -19,7 +19,7 @@ const local = process.env.DB_ENVIRONMENT === "local"
 
 console.log(">>>" + "./services/" + process.env.DBHELPER + " >>> " + port)
 
-import ("./services/" + process.env.DBHELPER)
+import ("./helpers/" + process.env.DBHELPER)
     .then((module) => {
         module.createDb(local)
         .then(() => {

@@ -6,7 +6,7 @@ export const LOGTEXT = 0;
 export const LOGDATA = 1;
 export const LOGDUMP = 2;
 
-export const BOARDSIZE = 9
+export const BOARDSIZE = 6
 
 export const PREFIX_ISLAND = 1
 export const PREFIX_PENGUIN = 2
@@ -45,20 +45,20 @@ export const DIRECTION_RIGHT = 2
 export const DIRECTION_UP = 3
 export const DIRECTION_DOWN = 4
 
-export const MOVES = {
-    DIRECTION_NONE: [0,0],
-    DIRECTION_LEFT: [0, -1],
-    DIRECTION_RIGHT: [0, 1],
-    DIRECTION_UP: [-1, 0],
-    DIRECTION_DOWN: [1, 0]
-}
+export const SEASON_SPRING = 1
+export const SEASON_SUMMER = 2
+export const SEASON_AUTUMN = 3
+export const SEASON_WINTER = 4
+
+export const MOVES = [[0,0],[0, -1],[0, 1],[-1, 0],[1, 0]]
+
 export const DIRECTION_NAMES = {
     DIRECTION_UP: "up",
     DIRECTION_DOWN: "down",
     DIRECTION_LEFT: "left",
     DIRECTION_RIGHT: "right"
 }
-export const activity_names = {
+export const ACTIVITY_NAMES = {
     ACTIVITY_NONE: "",
     ACTIVITY_EATING: "Eating",
     ACTIVITY_FISHING: "Fishing",

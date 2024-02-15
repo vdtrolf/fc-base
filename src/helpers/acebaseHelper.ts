@@ -1,4 +1,4 @@
-import { AceBase } from "acebase";
+import { AceBase, AceBaseLocalSettings } from "acebase";
 import { log } from "./logger"
 import { LOGVERB, LOGINFO, LOGERR, LOGDATA } from "../constants"
 
@@ -11,8 +11,8 @@ const debug = true;
 
 export const createDb = async (local:boolean) => {
   if (db === null) {
-    const options = { logLevel: "err" }; //   'verbose'};
-    db = new AceBase("my_db");
+    const options : AceBaseLocalSettings = { logLevel: "error", logColors: null, info : '', sponsor: false  }; //   'verbose'};
+    db = new AceBase("my_db",options);
   }
 };
 
@@ -33,9 +33,9 @@ export const putItem = (tableName:string, Item:any, uniqueId: string) => {
   if (db && db.ready()) {
     db.ref(`${tableName}/${uniqueId}`).set(Item);
     
-    console.log("===========:===== put ======");
-    console.dir(Item);
-    console.log("================ put ======");
+    // console.log("================ put ======");
+    // console.dir(Item);
+    // console.log("================ put ======");
 
     return true;
   } else {
@@ -86,9 +86,9 @@ export const getAsyncItems = async (
       .filter(filterIdx, filterComparator, filterVal)
       .get();
       
-      console.log("================ getAsyncItems ======");
-      console.dir(snapshots.getValues());
-      console.log("================ getAsyncItems ======");
+      // console.log("================ getAsyncItems ======");
+      // console.dir(snapshots.getValues());
+      // console.log("================ getAsyncItems ======");
 
     return snapshots.getValues();
 

@@ -1,5 +1,5 @@
 // External dependencies
-import Gem from "./score";
+import Gem from "./gem";
 import Garbage from "./garbage";
 import Fish from "./fish";
 import Penguin from "./penguin";
@@ -7,8 +7,8 @@ import Cell from "./cell";
 
 import { setLogLevel } from "../../helpers/logger";
 import { getIslandName } from "../../helpers/namesHelper"
-import { getUniqueId,getUniqueKey } from '../../helpers/idsHelper';
-import { LOGINFO, BOARDSIZE, PREFIX_PENGUIN, PREFIX_CELL, PREFIX_GARBAGE, PREFIX_FISH } from "../../constants";
+import { BOARDSIZE } from "../../constants";
+
 
 
 // Class Implementation
@@ -20,19 +20,21 @@ export default class Island {
         public name : string = getIslandName(),
         public counter : number = 0,
         public weather : number = Math.floor(Math.random() * 4),
+        public weatherAge : number = 0,
         public year : number = 2000,
+        public points : number = 0,
+        public platicControl : boolean = false,
+        public running : boolean = true,
         public evolutionSpeed : number = 1,
         public onGoing : boolean = true,
-        public penguins : {} = {},
-        public fishes : {} = {},
-        public gems : {} = {},
-        public garbages : {} = {},
-        public cells : any[] = [] ) {
-          
-            const uniqueKey = getUniqueKey(PREFIX_PENGUIN)
+        public penguins : Penguin[] = [],
+        public fishes : Fish[] = [],
+        public gems : Gem[] = [],
+        public garbages : Garbage[] = [],
+        public cells : any[] = [],
+        public islands: any[] = [] ) {
 
-            // this.penguins.push(new Penguin(1,uniqueKey,2,3));
-            this.build_island(this.size)
+            
 
             console.log("@@@@@ island created wikth name " + this.name)
         }
@@ -40,102 +42,8 @@ export default class Island {
         // Builds a random island of give size with penguins, fishes and garbage 
         //
 
-        build_island = (size : number) => {
 
-            //build islands in the world
-            let tmpland = []
-            for (let i= 0; i< size; i++) {
-                let lane =[]
-                for (let j= 0;j<size;j++) {
-                    lane.push(0)
-                }
-                tmpland.push(lane)
-            }
-                
-            // add some mountains     
-            for (let i=0; i < size / 3; i++) {
-                let v = 1 + Math.floor(Math.random() * (size-3))
-                let h = 1 + Math.floor(Math.random() * (size-3))
-                tmpland[v][h] = 15
-            }
-               
-            // add some land around the mountains 
-            for (let i=0; i<4; i++) {
-                for (let j=0; j< size * i;j++) {
-                    let v = 1 + Math.floor(Math.random() * (size-3))
-                    let h = 1 + Math.floor(Math.random() * (size-3))
-                    
-                    if (tmpland[v][h] == 0 
-                        && (tmpland[v][h+1] > 0 || tmpland[v][h-1] > 0 || tmpland[v+1][h] > 0 || tmpland[v-1][h] > 0 )) {
-                        tmpland[v][h] = 15-i*3
-                    }
-                }
-            }
-                        
-            // remove the lakes and the istmes        
-            for (let i=0; i < size -2;i++ ) {
-                for (let j=0; j<size -2;j++) {
-                    let v=i+1
-                    let h=j+1
-                    if (tmpland[v][h] == 0) {
-                        let cnt = 0
-                        if (tmpland[v][h+1] > 0) cnt += 1
-                        if (tmpland[v][h-1] > 0) cnt += 1
-                        if (tmpland[v+1][h] > 0) cnt += 1
-                        if (tmpland[v-1][h] > 0) cnt += 1
-                        if (cnt > 2) tmpland[v][h] = 1
-                    }
-                }
-            }
-                 
-            // create cells 
-            for (let i=0; i<size;i++ ) {   
-                let tmplane = []
-                for (let j=0; j< size;j++) {
-                    tmplane.push( new Cell(getUniqueKey(PREFIX_CELL),i,j,tmpland[i][j]))
-                }
-                this.cells.push(tmplane)
-            }
-            
-            // add some penguins
-            let cntpenguins=0
-            while (cntpenguins < size / 2) {
-                let v = Math.floor(Math.random() * (size-2))
-                let h = Math.floor(Math.random() * (size-2))
-                
-                if (this.cells[v][h].isGround() && ! this.penguins[v*100+h]) {
-                    const uniqueKey = getUniqueKey(PREFIX_PENGUIN)
-                    this.penguins[v*100 + h] = new Penguin(1,uniqueKey,v,h);
-                    cntpenguins +=1
-                }
-            }
-        
-            // add some garbage
-            let cntgarbages=0
-            while (cntgarbages < size / 4) {
-                let v = Math.floor(Math.random() * (size-1))
-                let h = Math.floor(Math.random() * (size-1))
-                
-                if (this.cells[v][h].isSea() && (v == 0 || v == size-1 || h==0 || h == size-1)) {
-                    const uniqueKey = getUniqueKey(PREFIX_GARBAGE)
-                    this.garbages[v*100 + h] = new Garbage(1,uniqueKey,v,h);
-                    cntgarbages +=1
-                }
-            }
-                        
-            // add some fishes
-            let cntfishes=0
-            while (cntfishes < size / 2) {
-                let v = Math.floor(Math.random() * (size-1))
-                let h = Math.floor(Math.random() * (size-1))
-                
-                if (this.cells[v][h].isSea() && !this.garbages[v*100+h] && !this.fishes[v*100+h]) {
-                    const uniqueKey = getUniqueKey(PREFIX_FISH)
-                    this.fishes[v*100 + h] = new Fish(1,uniqueKey,v,h);
-                    cntfishes +=1
-                }
-            }
-        }
+
 
 }
 

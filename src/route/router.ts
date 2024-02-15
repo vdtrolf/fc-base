@@ -20,6 +20,8 @@ import {getIslandsList} from "../data/repository/getIslandsList"
 import {getIsland} from "../data/repository/getIsland"
 import {createIsland} from "../data/repository/createIsland"
 
+import {buildIsland,becomeOlder, transmitCommands } from "../controller/islandControler"
+
 import { getUniqueId,getUniqueKey } from '../helpers/idsHelper';
 
 // Constants
@@ -47,14 +49,17 @@ flashRouter.get(path + "/create", async (_req: Request, res: Response) => {
     
     try {
 
-        console.log(">>>>>>>>>>> 0 >>>>>>>>>>>>>")
+        const size:number = _req?.query.size;
+        const difficulty:number  = _req?.query.difficulty;
 
-        const uniqueId = await getUniqueId(dbHelper,PREFIX_ISLAND)
-        const uniqueKey = getUniqueKey(PREFIX_ISLAND)
+        
+        let island = await buildIsland(dbHelper,size,difficulty)
 
-        const island = new Island(uniqueId,uniqueKey);
-        dbHelper.putItem("islands",island, island.id);
+        // console.log("============ Island ===================")
+        // console.dir(island)
+        // console.log("=======================================")
 
+        
         res.status(200).send(island);
     } catch (error) {
         console.error(error)
@@ -212,6 +217,49 @@ flashRouter.get(path + "/islands/:id", async (req: Request, res: Response) => {
         res.status(404).send(`Unable to find matching island with id: ${req.params.id}`);
     }
 });
+
+flashRouter.get(path + "/refresh/:id", async (req: Request, res: Response) => {
+
+    // console.log(">>>>>>>>>>> refresh >>>>>>>>>>>>>" + req?.params?.id + "<<" )
+
+    const id:string = req?.params?.id;
+    try {
+        const island : Island = (await getIsland(dbHelper,id));
+
+        if (island) {
+            let anIsland = await becomeOlder(dbHelper,island);
+            res.status(200).send(anIsland);
+        }
+    } catch (error) {
+        res.status(404).send(`Unable to find matching island with id: ${req.params.id}`);
+    }
+});
+
+flashRouter.get(path + "/command/:id", async (req: Request, res: Response) => {
+
+    // console.log(">>>>>>>>>>> command >>>>>>>>>>>>>" + req?.params?.id + "<<" )
+
+    const id:string = req?.params?.id;
+    try {
+        const island : Island = (await getIsland(dbHelper,id));
+
+        const penguinId : number = req?.query.penguinId;
+        const command1 : string  = req?.query.command1;
+        const command2 : string  = req?.query.command2;
+
+        if (island) {
+            transmitCommands( island, penguinId, [command1,command2])      
+            let anIsland = await becomeOlder(dbHelper,island);
+            res.status(200).send(anIsland);
+        }
+    } catch (error) {
+        res.status(404).send(`Unable to find matching island with id: ${req.params.id}`);
+    }
+});
+
+
+
+
 
 // CREATR ISLAND (POST)
 
