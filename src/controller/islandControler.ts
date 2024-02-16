@@ -163,6 +163,8 @@ export const transmitCommands = (island : Island, penguinId : number , commands:
 
 export const becomeOlder = async (dbHelper:any, island : Island) => {
 
+    let deepDebug = false
+
     let penguinsPos : {} = {}
     let fishesPos : {} = {}
     let garbagesPos : {} = {}
@@ -305,10 +307,12 @@ export const becomeOlder = async (dbHelper:any, island : Island) => {
 
         }
 
-        console.log("================ island =============")
-        console.dir(island)
-        console.log("================ island =============")
-        
+        if (deepDebug) {
+            console.log("================ island =============")
+            console.dir(island)
+            console.log("================ island =============")
+        }
+
         dbHelper.putItem("islands",island, island.id);
     }
 

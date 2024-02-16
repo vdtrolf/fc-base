@@ -2,15 +2,16 @@ import Penguin from "../data/model/penguin";
 import Cell from "../data/model/cell";
 
 import { randomDirection } from "../helpers/utilHelpers";
+import { interpretCommands } from "../helpers/interpreter";
 
 import {ACTIVITY_DEAD, ACTIVITY_FLEE, ACTIVITY_BUILDING, ACTIVITY_EATING, ACTIVITY_NONE,ACTIVITY_MOVING,ACTIVITY_CLEANING,ACTIVITY_FISHING,ACTIVITY_GETING,ACTIVITY_LOVING, DIRECTION_NONE, ACTIVITY_NAMES } from "../constants";
 
 
 //
-// makes the penguin move and become older
-// age, temperature and hunger increase faster if the evolution_speed raises
+// makes the penguin move && become older
+// age, temperature && hunger increase faster if the evolution_speed raises
 // 
-export const penguinBecomeOlder = (penguin : Penguin , cellsPos : {}, size:number, penguinsPos : {}, newpenguins : {} , fishesPos : {} , gemsPos: {} ,garbagesPos : {} ,weather: number ,evolution_speed : number ,force : boolean) => {
+export const penguinBecomeOlder = (penguin : Penguin , cellsPos : {}, size:number, penguinsPos : {}, newpenguins : {} , fishesPos : {} , gemsPos: {} ,garbagesPos: {} ,weather: number ,evolution_speed : number ,force : boolean) => {
 
     //  check if there is a neighbour
     let hasNeighbour =  penguinsPos[(penguin.vpos+1) *100 + penguin.hpos]|| penguinsPos[(penguin.vpos-1) *100 + penguin.hpos] || penguinsPos[penguin.vpos *100 + penguin.hpos-1] || penguinsPos[penguin.vpos *100 + penguin.hpos+1]   
@@ -69,7 +70,11 @@ export const penguinBecomeOlder = (penguin : Penguin , cellsPos : {}, size:numbe
             }
         
             penguin.goal = ACTIVITY_NONE       
+
             penguin.activityText = ACTIVITY_NAMES[penguin.activity]  
+
+            console.log("===========> " + penguin.activity + " = " + penguin.activityText)    
+
         }  
     }
     if (penguin.alive) {
@@ -121,9 +126,9 @@ export const penguinBecomeOlder = (penguin : Penguin , cellsPos : {}, size:numbe
             return false
         }
         // if force:
-        //         penguin.execute_commands(cells,size,penguins,newpenguins,fishes,gems,garbages)
+        penguinExecuteCommand(penguin,cellsPos,size,penguinsPos,newpenguins,fishesPos,gemsPos,garbagesPos)
 
-        // if alive and if the penguin is on smelting ice: try to escape
+        // if alive && if the penguin is on smelting ice: try to escape
         if (cellsPos[penguin.vpos * 100 + penguin.hpos] < 3) {
             let direction = randomDirection(penguin.vpos,penguin.hpos)
             let coord = direction.vpos * 100 + direction.hpos
@@ -157,96 +162,114 @@ export const penguinReceiveCommands = (penguin: Penguin,commands: string[]) => {
 }
 
 
-// def execute_commands(self,cells,size,penguins,newpenguins,fishes,gems,garbages):
+export const penguinExecuteCommand = (penguin : Penguin, cellsPos: {},size:number ,penguinsPos: {},newpenguins: {},fishesPos: {},gemsPos: {},garbagesPos: {}) => {
+       
+    let deepDebug = false
+
+    // Is there an order to execute
+    if ( penguin.commands.length > 0 ) {
+        let command = interpretCommands(penguin.commands,penguin.vpos,penguin.hpos,cellsPos,fishesPos,gemsPos,garbagesPos)
         
-//         # Is there an order to execute
-//         if len(self.commands) > 0:
-//             command = interpret_commands(self.commands,self.vpos,self.hpos,cells,fishes,gems,garbages)
-//             direction = {'vpos':self.vpos + command['vmove'],'hpos':self.hpos + command['hmove']}
-//             coord = direction['vpos']*100 + direction['hpos']
-//             if command['activity'] == ACTIVITY_MOVING:
-//                 if direction['vpos'] > 0 and direction['vpos'] < size and direction['hpos'] > 0 and direction['hpos'] < size and not penguins.get(coord) and not newpenguins.get(coord):
-//                     self.vpos = direction['vpos']
-//                     self.hpos = direction['hpos']
-//                     self.activity = command['activity']
-//                     self.goal = command['activity']
-//                     self.activity_direction = command['directionNum']
-//                     self.activity_time = 1      
-//             elif command['activity'] == ACTIVITY_FISHING:
-//                 if fishes.get(coord):
-//                     fishes[coord].onHook=True
-//                     self.activity_time = 3
-//                     self.activity = command['activity']
-//                     self.goal = command['activity']
-//                     self.acivityTarget = coord
-//                     self.activity_direction = command['directionNum']     
-//                 else:      
-//                     self.activity = ACTIVITY_NONE  
-//                     self.activity_direction = DIRECTION_NONE        
-//             elif command['activity'] == ACTIVITY_LOVING and not self.isChild and not self.isOld:
-//                 if penguins.get(coord) and not penguins[coord].isChild and not penguins[coord].isOld:
-//                     # if penguins[coord].activity == ACTIVITY_NONE and penguins[coord].gender != self.gender and penguins[coord].age > 4 :
-//                     penguins[coord].activity_time = 3
-//                     penguins[coord].love_time = 10
-//                     penguins[coord].can_love = False
-//                     penguins[coord].activity = command['activity']
-//                     penguins[coord].goal = command['activity']
-//                     self.love_time = 10
-//                     self.can_love = False
-//                     self.inLove=True
-//                     self.activity_time = 3
-//                     self.activity = command['activity']
-//                     self.goal = command['activity']
-//                     self.acivityTarget = coord
-//                     self.activity_direction = command['directionNum']                       
-//                 else:      
-//                     self.activity = ACTIVITY_NONE  
-//                     self.activity_direction = DIRECTION_NONE                        
-//             elif command['activity'] == ACTIVITY_GETING and not self.isChild and not self.isOld:
-//                 if gems.get(coord):
-//                     self.activity_time = 3  
-//                     self.activity = command['activity']      
-//                     self.goal = command['activity']
-//                     self.acivityTarget = coord
-//                     self.activity_direction = command['directionNum']      
-//                 else:      
-//                     self.activity = ACTIVITY_NONE
-//                     self.activity_direction = DIRECTION_NONE
-//             elif command['activity'] == ACTIVITY_CLEANING and not self.isChild and not self.isOld and self.hasShowel:
-//                 if garbages.get(coord):
-//                     self.activity_time = 2  
-//                     self.activity = command['activity']      
-//                     self.goal = command['activity']
-//                     self.acivityTarget = coord
-//                     self.activity_direction = command['directionNum']      
-//                 else:      
-//                     self.activity = ACTIVITY_NONE
-//                     self.activity_direction = DIRECTION_NONE        
-//             elif command['activity'] == ACTIVITY_EATING:
-//                 if self.hasFish :        
-//                     self.activity_time = 2  
-//                     self.activity = command['activity']
-//                     self.goal = command['activity']
-//                     self.activity_direction = command['directionNum']     
-//                 else:      
-//                     self.activity = ACTIVITY_NONE
-//                     self.activity_direction = DIRECTION_NONE
-//             elif command['activity'] == ACTIVITY_BUILDING and not self.isChild and not self.isOld:
-//                 if self.hasGem and cells[direction['vpos']][direction['hpos']].isSea() :        
-//                     self.activity_time = 3  
-//                     self.activityVPos = direction['vpos']
-//                     self.activityHPos = direction['hpos']
-//                     cells[self.activityVPos][self.activityHPos].startBuilding()
-//                     self.activity = command['activity']
-//                     self.goal = command['activity']
-//                     self.activity_direction = command['directionNum']
+        if (deepDebug) {
+            console.log("================= COMMAND =============")
+            console.dir(command)
+            console.log("================= COMMAND =============")
+        }
+        
+        let direction = {'vpos':penguin.vpos + command['vmove'],'hpos':penguin.hpos + command['hmove']}
+        let coord = direction.vpos*100 + direction.hpos
+        if (command.activity == ACTIVITY_MOVING) {
+            if (direction.vpos > 0 && direction.vpos < size && direction.hpos > 0 && direction.hpos < size && ! penguinsPos[coord] && ! newpenguins[coord] ) {
+                penguin.vpos = direction.vpos
+                penguin.hpos = direction.hpos
+                penguin.activity = command.activity
+                penguin.goal = command.activity
+                penguin.activityDirection = command['directionNum']
+                penguin.activityTime = 1      
+            }
+        } else if (command.activity == ACTIVITY_FISHING) {
+            if ( fishesPos[coord] ) {
+                fishesPos[coord].onHook=true
+                penguin.activityTime = 3
+                penguin.activity = command.activity
+                penguin.goal = command.activity
+                penguin.activityTarget = coord
+                penguin.activityDirection = command['directionNum']     
+            } else {      
+                penguin.activity = ACTIVITY_NONE  
+                penguin.activityDirection = DIRECTION_NONE        
+            }
+        } else if (command.activity  === ACTIVITY_LOVING && ! penguin.isChild && ! penguin.isOld ) {
+            if (penguinsPos[coord] && ! penguinsPos[coord].isChild && ! penguinsPos[coord].isOld ) {
+                // # if penguins[coord].activity == ACTIVITY_NONE && penguins[coord].gender != penguin.gender && penguins[coord].age > 4 :
+                penguinsPos[coord].activity_time = 3
+                penguinsPos[coord].love_time = 10
+                penguinsPos[coord].can_love = false
+                penguinsPos[coord].activity = command.activity
+                penguinsPos[coord].goal = command.activity
+                penguin.loveTime = 10
+                penguin.canLove = false
+                penguin.inLove=true
+                penguin.activityTime = 3
+                penguin.activity = command.activity
+                penguin.goal = command.activity
+                penguin.activityTarget = coord
+                penguin.activityDirection = command['directionNum']                       
+            } else {      
+                penguin.activity = ACTIVITY_NONE  
+                penguin.activityDirection = DIRECTION_NONE   
+            }                     
+        } else if (command.activity === ACTIVITY_GETING && ! penguin.isChild && !  penguin.isOld ) {
+            if (gemsPos[coord] ) {
+                penguin.activityTime = 3  
+                penguin.activity = command.activity      
+                penguin.goal = command.activity
+                penguin.activityTarget = coord
+                penguin.activityDirection = command['directionNum']      
+            } else {      
+                penguin.activity = ACTIVITY_NONE
+                penguin.activityDirection = DIRECTION_NONE
+            }
+        } else if (command.activity === ACTIVITY_CLEANING && ! penguin.isChild && ! penguin.isOld && penguin.hasShowel) {
+            if ( garbagesPos[coord] ) {
+                penguin.activityTime = 2  
+                penguin.activity = command.activity      
+                penguin.goal = command.activity
+                penguin.activityTarget = coord
+                penguin.activityDirection = command['directionNum']      
+            } else {      
+                penguin.activity = ACTIVITY_NONE
+                penguin.activityDirection = DIRECTION_NONE      
+            }  
+        } else if (command.activity === ACTIVITY_EATING ) {
+            if ( penguin.hasFish ) {        
+                penguin.activityTime = 2  
+                penguin.activity = command.activity
+                penguin.goal = command.activity
+                penguin.activityDirection = command['directionNum']     
+            } else {      
+                penguin.activity = ACTIVITY_NONE
+                penguin.activityDirection = DIRECTION_NONE
+            }
+        } else if (command.activity === ACTIVITY_BUILDING && ! penguin.isChild && ! penguin.isOld ) {
+            if (penguin.hasGem && cellsPos[direction.vpos][direction.hpos].isSea() ) {      
+                penguin.activityTime = 3  
+                penguin.activityVPos = direction.vpos
+                penguin.activityHPos = direction.hpos
+                cellsPos[penguin.activityVPos][penguin.activityHPos].startBuilding()
+                penguin.activity = command.activity
+                penguin.goal = command.activity
+                penguin.activityDirection = command['directionNum']
+            } else {      
+                penguin.activity = ACTIVITY_NONE    
+                penguin.activityDirection = DIRECTION_NONE
+            }
+        } else {
+            penguin.activity = ACTIVITY_NONE    
+            penguin.activityDirection = DIRECTION_NONE
+        }
 
-//                 else:      
-//                     self.activity = ACTIVITY_NONE    
-//                     self.activity_direction = DIRECTION_NONE
-//             else:
-//                 self.activity = ACTIVITY_NONE    
-//                 self.activity_direction = DIRECTION_NONE
-
-//             self.activity_text = activity_names[self.activity] 
-//             self.commands = []
+        penguin.activityText = ACTIVITY_NAMES[penguin.activity] 
+        penguin.commands = []
+    }
+}

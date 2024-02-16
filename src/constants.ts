@@ -52,29 +52,31 @@ export const SEASON_WINTER = 4
 
 export const MOVES = [[0,0],[0, -1],[0, 1],[-1, 0],[1, 0]]
 
-export const DIRECTION_NAMES = {
-    DIRECTION_UP: "up",
-    DIRECTION_DOWN: "down",
-    DIRECTION_LEFT: "left",
-    DIRECTION_RIGHT: "right"
-}
-export const ACTIVITY_NAMES = {
-    ACTIVITY_NONE: "",
-    ACTIVITY_EATING: "Eating",
-    ACTIVITY_FISHING: "Fishing",
-    ACTIVITY_LOVING: "Loving",
-    ACTIVITY_GETING: "Diging",
-    ACTIVITY_BUILDING: "Building",
-    ACTIVITY_MOVING: "Going",
-    ACTIVITY_CLEANING: "Cleaning",
-    ACTIVITY_DEAD: "Dead"
-}
-export const weathers = {
-    WEATHER_SUN: 'Sun',
-    WEATHER_RAIN: 'Rain',
-    WEATHER_SNOW: 'Snow',
-    WEATHER_COLD: 'Cold'
-}
+export const DIRECTION_NAMES = [
+    "up",
+    "down",
+    "left",
+    "right"
+]
+
+export const ACTIVITY_NAMES = [
+    "",
+    "Eating",
+    "Fishing",
+    "Loving",
+    "Diging",
+    "Building",
+    "Going",
+    "Cleaning",
+    "Dead"]
+
+export const weathers = [
+    'Sun',
+    'Rain',
+    'Snow',
+    'Cold'
+]
+
 export const letters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
            "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
 
