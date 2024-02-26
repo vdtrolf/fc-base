@@ -1,7 +1,7 @@
 
-export const getIslandsList = async (dbHelper) => { 
+export const getIslandsList = async (dbHelper) => {
 
-  const islands = (await dbHelper.getAsyncItems("islands")) as unknown ;
-  return islands;
+    const islands = (await dbHelper.getAsyncItems("islands")) as unknown;
+    return islands;
 
 }

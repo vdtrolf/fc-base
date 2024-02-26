@@ -1,5 +1,6 @@
 import Score from "../model/score";
+import { IDBHelper } from "../../helpers/databaseHelper"
 
-export const createScore = (dbHelper : any, score : Score) => { 
-  return dbHelper.putItem("scores",score, score.id);
+export const createScore = (dbHelper: IDBHelper, score: Score) => {
+    return dbHelper.putItem("scores", { item: score }, score.id);
 }
