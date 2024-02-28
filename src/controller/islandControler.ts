@@ -120,7 +120,7 @@ const populateIsland = (island: Island, size: number, difficulty: number = 1) =>
         const v = Math.floor(Math.random() * (size - 1))
         const h = Math.floor(Math.random() * (size - 1))
 
-        if (island.cells[v][h].isSea() && (v === 0 || v === size - 1 || h === 0 || h === size - 1) && !garbagesPos[v * 100 + h]) {
+        if ((v+h) > 0 && island.cells[v][h].isSea() && (v === 0 || v === size - 1 || h === 0 || h === size - 1) && !garbagesPos[v * 100 + h]) {
             const uniqueKey = getUniqueKey(PREFIX_GARBAGE)
             const garbage = new Garbage(1, uniqueKey, v, h);
             island.garbages.push(garbage)
@@ -137,7 +137,7 @@ const populateIsland = (island: Island, size: number, difficulty: number = 1) =>
         const v = Math.floor(Math.random() * (size - 1))
         const h = Math.floor(Math.random() * (size - 1))
 
-        if (island.cells[v][h].isSea() && !garbagesPos[v * 100 + h] && !fishesPos[v * 100 + h]) {
+        if ((v+h) > 0 && island.cells[v][h].isSea() && !garbagesPos[v * 100 + h] && !fishesPos[v * 100 + h]) {
             const uniqueKey = getUniqueKey(PREFIX_FISH)
             const fish = new Fish(1, uniqueKey, v, h);
             island.fishes.push(fish)
