@@ -20,7 +20,7 @@ import { getIslandsList } from "../data/repository/getIslandsList"
 import { getIsland } from "../data/repository/getIsland"
 import { createIsland } from "../data/repository/createIsland"
 
-import { buildIsland, becomeOlder, transmitCommands } from "../controller/islandControler"
+import { buildIsland } from "../controller/islandControler"
 import { IDBHelper } from "../helpers/databaseHelper"
 
 // Set de db helper, which can be i.e. acebase or DynamoDB
@@ -210,64 +210,5 @@ flashRouter.get(path + "/islands/:id", async (req: Request, res: Response) => {
         }
     } catch (error) {
         res.status(404).send(`Unable to find matching island with id: ${req.params.id}`);
-    }
-});
-
-flashRouter.get(path + "/refresh/:id", async (req: Request, res: Response) => {
-
-    // console.log(">>>>>>>>>>> refresh >>>>>>>>>>>>>" + req?.params?.id + "<<" )
-
-    const id: string = req?.params?.id;
-    try {
-        const island: Island = (await getIsland(dbHelper, id));
-
-        if (island) {
-            const anIsland = await becomeOlder(dbHelper, island);
-            res.status(200).send(anIsland);
-        }
-    } catch (error) {
-        res.status(404).send(`Unable to find matching island with id: ${req.params.id}`);
-    }
-});
-
-flashRouter.get(path + "/command/:id", async (req: Request, res: Response) => {
-
-    const id: string = req?.params?.id;
-    try {
-        const island: Island = (await getIsland(dbHelper, id));
-
-        const penguinId: number = req?.query.penguinId;
-        const command1: string = req?.query.command1;
-        const command2: string = req?.query.command2;
-
-        if (island) {
-
-            transmitCommands(island, penguinId, [command1, command2])
-            const anIsland = await becomeOlder(dbHelper, island);
-            res.status(200).send(anIsland);
-        }
-    } catch (error) {
-        res.status(404).send(`Unable to find matching island with id: ${req.params.id}`);
-    }
-});
-
-
-
-
-
-// CREATR ISLAND (POST)
-
-flashRouter.post(path + "/islands/", async (req: Request, res: Response) => {
-
-    try {
-        const island = req.body as Island;
-        const result = createIsland(dbHelper, island);
-
-        result
-            ? res.status(201).send(`Successfully created a new island with id ${island.id}`)
-            : res.status(500).send("Failed to create a new island.");
-    } catch (error) {
-        console.error(error);
-        res.status(400).send(error.message);
     }
 });

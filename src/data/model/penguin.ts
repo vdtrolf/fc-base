@@ -14,8 +14,8 @@ export default class Penguin {
         public deadAge: number = 0,
         public hunger: number = 0,
         public temp: number = 0,
-        public gender: number = Math.floor(Math.random() * 2),
-        public genderName: string = "bzz",
+        public gender: string = Math.floor(Math.random() * 2) === 0 ? "m" : "f",
+        public genderName: string = gender === "m" ? "Male" : "emale",
         public name: string = getPersonName(gender),
         public shape: number = Math.floor(Math.random() * 3),
         public activity: number = ACTIVITY_NONE,
@@ -37,11 +37,6 @@ export default class Penguin {
         public loveTime: number = 0,
         public hasShowel: boolean = false,
         public showelCnt: number = 0,
-        public commands: string[] = []) {
+        public tiredCnt: number = 0) {
     }
 }
-
-// shape:penguin.figure,
-//                     vision: 2,
-// targetDirections: penguin.activityTarget,
-// path:"",

@@ -2,8 +2,8 @@ export const initiateNames = (): void => {
 
 }
 
-export const getPersonName = (gender: number): string => {
-    const name: string = gender === 0 ? "toto" : "tata";
+export const getPersonName = (gender: string): string => {
+    const name: string = gender === "m" ? "toto" : "tata";
     return name;
 }
 
