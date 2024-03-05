@@ -5,8 +5,13 @@ import { log } from "./logger"
 import { LOGINFO, LOGERR, LOGDATA } from "../constants"
 dotenv.config()
 
-const import_client_dynamodb = require("@aws-sdk/client-dynamodb");
-const import_lib_dynamodb = require("@aws-sdk/lib-dynamodb");
+import { DynamoDBClient, ListTablesCommand, CreateTableCommand, CreateTableCommandInput } from "@aws-sdk/client-dynamodb";
+import { DynamoDBDocumentClient, ScanCommand, PutCommand, QueryCommand } from "@aws-sdk/lib-dynamodb";
+
+
+// const import_client_dynamodb = require("@aws-sdk/client-dynamodb");
+// const import_lib_dynamodb = require("@aws-sdk/lib-dynamodb");
+
 let client = null;
 let docClient = null
 
@@ -15,7 +20,7 @@ const realm = "db";
 const source = "dynamohelper.js";
 
 
-const islandsdefs = {
+const islandsdefs: CreateTableCommandInput = {
     AttributeDefinitions: [{ AttributeName: "id", AttributeType: "N" }],
     KeySchema: [{ AttributeName: "id", KeyType: "HASH" }],
     ProvisionedThroughput: {
@@ -25,7 +30,7 @@ const islandsdefs = {
     TableName: "islands",
 };
 
-const usersdefs = {
+const usersdefs: CreateTableCommandInput = {
     AttributeDefinitions: [{ AttributeName: "id", AttributeType: "N" }],
     KeySchema: [{ AttributeName: "id", KeyType: "HASH" }],
     ProvisionedThroughput: {
@@ -35,7 +40,7 @@ const usersdefs = {
     TableName: "users",
 };
 
-const namesdefs = {
+const namesdefs: CreateTableCommandInput = {
     AttributeDefinitions: [{ AttributeName: "id", AttributeType: "N" }],
     KeySchema: [{ AttributeName: "id", KeyType: "HASH" }],
     ProvisionedThroughput: {
@@ -45,7 +50,7 @@ const namesdefs = {
     TableName: "names",
 };
 
-const scoresdefs = {
+const scoresdefs: CreateTableCommandInput = {
     AttributeDefinitions: [{ AttributeName: "id", AttributeType: "N" }],
     KeySchema: [{ AttributeName: "id", KeyType: "HASH" }],
     ProvisionedThroughput: {
@@ -64,8 +69,8 @@ export const createDb = async (local: boolean) => {
 
     if (!client) {
         if (local) {
-            client = new import_client_dynamodb.DynamoDBClient({ endpoint: 'http://' + process.env.DYNAMO_LOCAL_URL + ":" + process.env.DYNAMO_LOCAL_PORT });
-            docClient = import_lib_dynamodb.DynamoDBDocumentClient.from(client);
+            client = new DynamoDBClient({ endpoint: 'http://' + process.env.DYNAMO_LOCAL_URL + ":" + process.env.DYNAMO_LOCAL_PORT });
+            docClient = DynamoDBDocumentClient.from(client);
             log(realm, source, "createDb", "connected to local");
         } else {
 
@@ -98,29 +103,29 @@ export const cleanDb = async () => {
 
     let namesInitiated: boolean = true;
 
-    const command = new import_client_dynamodb.ListTablesCommand({});
+    const command = new ListTablesCommand({});
     const response = await client.send(command);
 
     if (!response.TableNames.includes('islands')) {
-        const command = new import_client_dynamodb.CreateTableCommand(islandsdefs);
+        const command = new CreateTableCommand(islandsdefs);
         await client.send(command);
         log(realm, source, "cleanDb", "Table islands created", LOGINFO, LOGDATA);
     }
 
     if (!response.TableNames.includes('users')) {
-        const command = new import_client_dynamodb.CreateTableCommand(usersdefs);
+        const command = new CreateTableCommand(usersdefs);
         await client.send(command);
         log(realm, source, "cleanDb", "Table users created", LOGINFO, LOGDATA);
     }
 
     if (!response.TableNames.includes('scores')) {
-        const command = new import_client_dynamodb.CreateTableCommand(scoresdefs);
+        const command = new CreateTableCommand(scoresdefs);
         await client.send(command);
         log(realm, source, "cleanDb", "Table islands created", LOGINFO, LOGDATA);
     }
 
     if (!response.TableNames.includes('names')) {
-        const command = new import_client_dynamodb.CreateTableCommand(namesdefs);
+        const command = new CreateTableCommand(namesdefs);
         await client.send(command);
         namesInitiated = false;
         log(realm, source, "cleanDb", "Table users created", LOGINFO, LOGDATA);
@@ -136,9 +141,9 @@ export const putItem = async (TableName: string, anItem: string, uniqueId: strin
 
     log(realm, source, "putItem " + uniqueId, anItem, LOGINFO, LOGDATA);
 
-    const command = new import_lib_dynamodb.PutCommand({
+    const command = new PutCommand({
         TableName: TableName,
-        Item: anItem
+        Item: { uniqueId: anItem }
     });
 
     // console.dir(command)
@@ -171,7 +176,7 @@ export const getItem = async (tableName: string, uniqueId: string) => {
 
     log(realm, source, "getItem params", uniqueId, LOGINFO, LOGDATA);
 
-    const command = new import_client_dynamodb.QueryCommand({
+    const command = new QueryCommand({
         TableName: tableName,
         KeyConditionExpression: "id = :id",
         ExpressionAttributeValues: {
@@ -212,7 +217,7 @@ export const getAsyncItems = async (
     );
 
     const fval = `${filterVal}`;
-    const command = new import_client_dynamodb.ScanCommand({
+    const command = new ScanCommand({
         ExpressionAttributeValues: {
             ":id": { N: fval },
         },

@@ -18,7 +18,6 @@ import { createUser } from "../data/repository/createUser"
 import Island from "../data/model/island";
 import { getIslandsList } from "../data/repository/getIslandsList"
 import { getIsland } from "../data/repository/getIsland"
-import { createIsland } from "../data/repository/createIsland"
 
 import { buildIsland } from "../controller/islandControler"
 import { IDBHelper } from "../helpers/databaseHelper"

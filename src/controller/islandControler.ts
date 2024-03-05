@@ -5,7 +5,7 @@ import Fish from "../data/model/fish";
 import Garbage from "../data/model/garbage";
 
 import { getUniqueId, getUniqueKey } from '../helpers/idsHelper';
-import { PREFIX_PENGUIN, PREFIX_CELL, PREFIX_GARBAGE, PREFIX_FISH, PREFIX_ISLAND, PREFIX_GEM } from "../constants";
+import { PREFIX_PENGUIN, PREFIX_CELL, PREFIX_GARBAGE, PREFIX_FISH, PREFIX_ISLAND } from "../constants";
 import { itemCollection } from "../data/model/itemInterface";
 
 export const buildIsland = async (dbHelper, size: number, difficulty: number) => {
@@ -108,7 +108,7 @@ const populateIsland = (island: Island, size: number, difficulty: number = 1) =>
         const v = Math.floor(Math.random() * (size - 1))
         const h = Math.floor(Math.random() * (size - 1))
 
-        if ((v+h) > 0 && island.cells[v][h].isSea() && (v === 0 || v === size - 1 || h === 0 || h === size - 1) && !garbagesPos[v * 100 + h]) {
+        if ((v + h) > 0 && island.cells[v][h].isSea() && (v === 0 || v === size - 1 || h === 0 || h === size - 1) && !garbagesPos[v * 100 + h]) {
             const uniqueKey = getUniqueKey(PREFIX_GARBAGE)
             const garbage = new Garbage(1, uniqueKey, v, h);
             island.garbages.push(garbage)
@@ -125,7 +125,7 @@ const populateIsland = (island: Island, size: number, difficulty: number = 1) =>
         const v = Math.floor(Math.random() * (size - 1))
         const h = Math.floor(Math.random() * (size - 1))
 
-        if ((v+h) > 0 && island.cells[v][h].isSea() && !garbagesPos[v * 100 + h] && !fishesPos[v * 100 + h]) {
+        if ((v + h) > 0 && island.cells[v][h].isSea() && !garbagesPos[v * 100 + h] && !fishesPos[v * 100 + h]) {
             const uniqueKey = getUniqueKey(PREFIX_FISH)
             const fish = new Fish(1, uniqueKey, v, h);
             island.fishes.push(fish)

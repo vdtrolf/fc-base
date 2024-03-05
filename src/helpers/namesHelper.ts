@@ -1,5 +1,8 @@
-export const initiateNames = (): void => {
+import * as fs from 'fs';
 
+export const initiateNames = (): void => {
+    const words = fs.readFileSync('./prenoms-hf.txt', 'utf-8');
+    console.log(words)
 }
 
 export const getPersonName = (gender: string): string => {

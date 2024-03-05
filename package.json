@@ -37,5 +37,6 @@
   "description": "Tap tap typescript back-end",
   "repository": "y",
   "author": "y",
-  "private": true
+  "private": true,
+  "packageManager": "yarn@4.1.0"
 }

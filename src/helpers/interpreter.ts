@@ -6,9 +6,9 @@ import {
 } from "../constants";
 
 
- //Returns a direction based on an order - in the form of vpos/hpos coords//
+//Returns a direction based on an order - in the form of vpos/hpos coords//
 export const getDirection = (command: string, activity: number) => {
-   
+
     // console.log(">>>>>>>>>>>>>>>>> COMMAND  => " + command)
     // console.log(">>>>>>>>>>>>>>>>> ACTIVITY => " + activity)
 
