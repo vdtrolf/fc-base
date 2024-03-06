@@ -33,8 +33,7 @@ if (DB) {
 
             setDbHelper(DB);
 
-            // if (!namesInitiated) { initiateNames() }
-            initiateNames()
+            if (!namesInitiated) { initiateNames(DB) }
 
             app.use("/", flashRouter);
 
