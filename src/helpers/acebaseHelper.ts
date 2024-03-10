@@ -33,7 +33,7 @@ export const putItem = (tableName:string, Item:any, uniqueId: string) => {
   if (db && db.ready()) {
     db.ref(`${tableName}/${uniqueId}`).set(Item);
     
-    console.log("================ put ======");
+    console.log("===========:===== put ======");
     console.dir(Item);
     console.log("================ put ======");
 
