@@ -7,7 +7,7 @@ const source = "acebasehelper.js";
 
 
 let db = null;
-const debug = false;
+const debug = true;
 
 export const createDb = async (local:boolean) => {
   if (db === null) {
