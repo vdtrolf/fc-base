@@ -6,7 +6,7 @@ let allInfoRealms :boolean = false;
 let allVerbRealms :boolean = false;
 
 
-// default loglevel
+// default log level
 let loglevel : number = LOGERR;
 
 // sets the log level either for all realms or a specific realm 
