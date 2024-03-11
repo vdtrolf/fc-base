@@ -8,7 +8,7 @@ export class AcebaseDBHelper implements IDBHelper {
     debug: boolean;
     realm: string;
     source: string;
-    db;
+    db: any;
 
     constructor(local: boolean) {
         this.local = local;
