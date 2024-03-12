@@ -1,1 +1,0 @@
-{"version":3,"file":"getIslandsList.js","sourceRoot":"","sources":["../../src/api/getIslandsList.ts"],"names":[],"mappings":";;;;;;;;;;;;AACO,MAAM,cAAc,GAAG,CAAO,QAAQ,EAAE,EAAE;IAE/C,MAAM,OAAO,GAAG,CAAC,MAAM,QAAQ,CAAC,aAAa,CAAC,SAAS,CAAC,CAAY,CAAE;IACtE,OAAO,OAAO,CAAC;AAEjB,CAAC,CAAA,CAAA;AALY,QAAA,cAAc,kBAK1B"}

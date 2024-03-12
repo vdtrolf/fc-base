@@ -1,7 +1,7 @@
 
-export const getScoresList = async (dbHelper) => { 
+export const getScoresList = async (dbHelper) => {
 
-  const scores = (await dbHelper.getAsyncItems("scores")) as unknown ;
-  return scores;
+    const scores = (await dbHelper.getAsyncItems("scores")) as unknown;
+    return scores;
 
 }

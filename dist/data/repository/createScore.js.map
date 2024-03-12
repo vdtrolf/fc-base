@@ -1,1 +1,0 @@
-{"version":3,"file":"createScore.js","sourceRoot":"","sources":["../../../src/data/repository/createScore.ts"],"names":[],"mappings":";;;AAEO,MAAM,WAAW,GAAG,CAAC,QAAc,EAAE,KAAa,EAAE,EAAE;IAC3D,OAAO,QAAQ,CAAC,OAAO,CAAC,QAAQ,EAAC,KAAK,EAAE,KAAK,CAAC,EAAE,CAAC,CAAC;AACpD,CAAC,CAAA;AAFY,QAAA,WAAW,eAEvB"}

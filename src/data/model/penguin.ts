@@ -1,7 +1,6 @@
 // External dependencies
-import { setLogLevel } from "../../helpers/logger";
 import { getPersonName } from "../../helpers/namesHelper"
-import { LOGINFO, ACTIVITY_NONE, DIRECTION_NONE, DIRECTION_NAMES} from "../../constants";
+import { ACTIVITY_NONE, DIRECTION_NONE } from "../../constants";
 
 // Class Implementation
 export default class Penguin {
@@ -15,17 +14,29 @@ export default class Penguin {
         public deadAge: number = 0,
         public hunger: number = 0,
         public temp: number = 0,
-        public gender: number = Math.floor(Math.random() * 2),
-        public name: string = getPersonName(gender), 
+        public gender: string = Math.floor(Math.random() * 2) === 0 ? "m" : "f",
+        public genderName: string = gender === "m" ? "Male" : "emale",
+        public name: string = getPersonName(gender),
+        public shape: number = Math.floor(Math.random() * 3),
         public activity: number = ACTIVITY_NONE,
-        public activityTime : number = 0, 
-        public activityTarget : number = DIRECTION_NONE, 
+        public activityTime: number = 0,
+        public activityTarget: number = DIRECTION_NONE,
+        public targetVPos: number = 0,
+        public targetHPos: number = 0,
+        public activityVPos: number = 0,
+        public activityHPos: number = 0,
         public activityDirection: number = DIRECTION_NONE,
-        public activityText: string = DIRECTION_NAMES[activityDirection],
+        public activityText: string = '', // DIRECTION_NAMES[activityDirection],
         public goal: number = DIRECTION_NONE,
         public hasFish: boolean = false,
-        public hasGem: boolean = false) {
-
-        }
-
+        public hasGem: boolean = false,
+        public isChild: boolean = true,
+        public isOld: boolean = false,
+        public canLove: boolean = false,
+        public inLove: boolean = false,
+        public loveTime: number = 0,
+        public hasShowel: boolean = false,
+        public showelCnt: number = 0,
+        public tiredCnt: number = 0) {
+    }
 }

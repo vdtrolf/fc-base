@@ -1,38 +1,38 @@
 // External dependencies
-import Gem from "./score";
+import Gem from "./gem";
 import Garbage from "./garbage";
 import Fish from "./fish";
 import Penguin from "./penguin";
-import Cell from "./name";
+import Cell from "./cell";
+import { islandExtract } from "./itemInterface";
 
-import { setLogLevel } from "../../helpers/logger";
 import { getIslandName } from "../../helpers/namesHelper"
-import { getUniqueId,getUniqueKey } from '../../helpers/idsHelper';
-import { LOGINFO, BOARDSIZE, PREFIX_PENGUIN } from "../../constants";
-
+import { BOARDSIZE } from "../../constants";
 
 // Class Implementation
 export default class Island {
     constructor(
-        public id : number,
-        public key : number,
-        public size : number = BOARDSIZE,
-        public name : string = getIslandName(),
-        public counter : number = 0,
-        public weather : number = Math.floor(Math.random() * 4),
-        public evolutionSpeed : number = 1,
-        public onGoing : boolean = true,
-        public penguins : Penguin[] = [],
-        public fishes : Fish[] = [],
-        public gems : Gem[] = [],
-        public garbages : Garbage[] = [],
-        public cells : Cell[] = [] ) {
-          
-            const uniqueKey = getUniqueKey(PREFIX_PENGUIN)
+        public id: number,
+        public key: number,
+        public size: number = BOARDSIZE,
+        public difficulty: number = 2,
+        public name: string = getIslandName(),
+        public counter: number = 0,
+        public weather: number = Math.floor(Math.random() * 4),
+        public weatherAge: number = 0,
+        public year: number = 2000,
+        public points: number = 0,
+        public platicControl: boolean = false,
+        public running: boolean = true,
+        public evolutionSpeed: number = 1,
+        public onGoing: boolean = true,
+        public penguins: Penguin[] = [],
+        public fishes: Fish[] = [],
+        public gems: Gem[] = [],
+        public garbages: Garbage[] = [],
+        public cells: Cell[][] = [],
+        public islands: islandExtract[] = []) {
 
-            this.penguins.push(new Penguin(1,uniqueKey,2,3));
-
-            console.log("@@@@@ island created wikth name " + this.name)
-        }
+        console.log("@@@@@ island created wikth name " + this.name)
+    }
 }
-

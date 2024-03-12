@@ -1,1 +1,0 @@
-{"version":3,"file":"getUsersList.js","sourceRoot":"","sources":["../../src/api/getUsersList.ts"],"names":[],"mappings":";;;;;;;;;;;;AACO,MAAM,YAAY,GAAG,CAAO,QAAQ,EAAE,EAAE;IAE3C,MAAM,KAAK,GAAG,CAAC,MAAM,QAAQ,CAAC,aAAa,CAAC,OAAO,CAAC,CAAY,CAAE;IAClE,OAAO,KAAK,CAAC;AAEf,CAAC,CAAA,CAAA;AALU,QAAA,YAAY,gBAKtB"}

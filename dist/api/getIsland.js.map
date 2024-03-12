@@ -1,1 +1,0 @@
-{"version":3,"file":"getIsland.js","sourceRoot":"","sources":["../../src/api/getIsland.ts"],"names":[],"mappings":";;;;;;;;;;;;AAGO,MAAM,SAAS,GAAG,CAAO,QAAQ,EAAE,EAAE,EAAoB,EAAE;IAEhE,MAAM,MAAM,GAAY,CAAC,MAAM,QAAQ,CAAC,OAAO,CAAC,SAAS,EAAC,EAAE,CAAC,CAAsB,CAAC;IACpF,OAAO,MAAM,CAAC;AAChB,CAAC,CAAA,CAAA;AAJY,QAAA,SAAS,aAIrB"}

@@ -1,1 +1,0 @@
-{"version":3,"file":"getPaintingsList.js","sourceRoot":"","sources":["../../src/api/getPaintingsList.ts"],"names":[],"mappings":";;;;;;;;;;;;AACO,MAAM,OAAO,GAAG,CAAO,QAAQ,EAAE,EAAE;IAExC,MAAM,SAAS,GAAG,CAAC,MAAM,QAAQ,CAAC,aAAa,CAAC,WAAW,CAAC,CAAY,CAAE;IAC1E,OAAO,SAAS,CAAC;AAEnB,CAAC,CAAA,CAAA;AALY,QAAA,OAAO,WAKnB"}

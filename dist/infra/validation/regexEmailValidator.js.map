@@ -1,1 +1,0 @@
-{"version":3,"file":"regexEmailValidator.js","sourceRoot":"","sources":["../../../src/infra/validation/regexEmailValidator.ts"],"names":[],"mappings":";;;AAEA,iDAAiD;AACjD,2CAA2C;AAC3C,MAAa,mBAAmB;IAAhC;QACE,UAAK,GAAW,kDAAkD,CAAC;IAKrE,CAAC;IAHC,QAAQ,CAAC,KAAa;QACpB,OAAO,IAAI,CAAC,KAAK,CAAC,IAAI,CAAC,KAAK,CAAC,CAAC;IAChC,CAAC;IAAA,CAAC;CACH;AAND,kDAMC;AAAA,CAAC"}
