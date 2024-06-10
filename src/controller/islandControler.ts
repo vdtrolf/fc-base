@@ -8,7 +8,7 @@ import { getUniqueId, getUniqueKey } from '../helpers/idsHelper';
 import { PREFIX_PENGUIN, PREFIX_CELL, PREFIX_GARBAGE, PREFIX_FISH, PREFIX_ISLAND } from "../constants";
 import { itemCollection } from "../data/model/itemInterface";
 
-export const buildIsland = async (dbHelper, size: number, difficulty: number) => {
+export const buildIsland = async (dbHelper , size: number, difficulty: number) => {
 
     const uniqueId = await getUniqueId(dbHelper, PREFIX_ISLAND)
     const uniqueKey = getUniqueKey(PREFIX_ISLAND)
