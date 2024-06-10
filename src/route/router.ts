@@ -4,10 +4,6 @@ dotenv.config()
 
 import express, { Request, Response } from "express";
 import User from "../data/model/user";
-import { getNamesList } from "../data/repository/getNamesList"
-import { getName } from "../data/repository/getName"
-import { createName } from "../data/repository/createName"
-import Name from "../data/model/name";
 import { getScoresList } from "../data/repository/getScoresList"
 import { getScore } from "../data/repository/getScore"
 import { createScore } from "../data/repository/createScore"
@@ -15,11 +11,11 @@ import Score from "../data/model/score";
 import { getUsersList } from "../data/repository/getUsersList"
 import { getUser } from "../data/repository/getUser"
 import { createUser } from "../data/repository/createUser"
-import Island from "../data/model/island";
-import { getIslandsList } from "../data/repository/getIslandsList"
-import { getIsland } from "../data/repository/getIsland"
+import Environment from "../data/model/environment";
+import { getEnvironmentsList } from "../data/repository/getEnvironmentsList"
+import { getEnvironment } from "../data/repository/getEnvironment"
 
-import { buildIsland } from "../controller/islandControler"
+import { buildEnvironment } from "../controller/environmentController"
 import { IDBHelper } from "../helpers/databaseHelper"
 
 // Set de db helper, which can be i.e. acebase or DynamoDB
@@ -47,59 +43,17 @@ flashRouter.get(path + "/create", async (_req: Request, res: Response) => {
         const difficulty: number = _req?.query.difficulty;
 
 
-        const island = await buildIsland(dbHelper, size, difficulty)
+        const Environment = await buildEnvironment(dbHelper, null)
 
-        // console.log("============ Island ===================")
-        // console.dir(island)
+        // console.log("============ Environment ===================")
+        // console.dir(Environment)
         // console.log("=======================================")
 
 
-        res.status(200).send(island);
+        res.status(200).send(Environment);
     } catch (error) {
         console.error(error)
         res.status(500).send(error.message);
-    }
-});
-
-// GET NAME
-
-flashRouter.get(path + "/names/", async (_req: Request, res: Response) => {
-    try {
-        const names = (await getNamesList(dbHelper));
-
-        res.status(200).send(names);
-    } catch (error) {
-        res.status(500).send(error.message);
-    }
-});
-
-flashRouter.get(path + "/names/:id", async (req: Request, res: Response) => {
-    const id: string = req?.params?.id;
-    try {
-        const name: Name = (await getName(dbHelper, id));
-
-        if (name) {
-            res.status(200).send(name);
-        }
-    } catch (error) {
-        res.status(404).send(`Unable to find matching name with id: ${req.params.id}`);
-    }
-});
-
-// POST NAME
-
-flashRouter.post(path + "/names/", async (req: Request, res: Response) => {
-
-    try {
-        const name = req.body as Name;
-        const result = createName(dbHelper, name);
-
-        result
-            ? res.status(201).send(`Successfully created a new name with id ${name.id}`)
-            : res.status(500).send("Failed to create a new name.");
-    } catch (error) {
-        console.error(error);
-        res.status(400).send(error.message);
     }
 });
 
@@ -187,27 +141,27 @@ flashRouter.post(path + "/users/", async (req: Request, res: Response) => {
     }
 });
 
-// GET ISLAND
+// GET Environment
 
-flashRouter.get(path + "/islands/", async (_req: Request, res: Response) => {
+flashRouter.get(path + "/Environments/", async (_req: Request, res: Response) => {
     try {
-        const islands = (await getIslandsList(dbHelper));
+        const Environments = (await getEnvironmentsList(dbHelper));
 
-        res.status(200).send(islands);
+        res.status(200).send(Environments);
     } catch (error) {
         res.status(500).send(error.message);
     }
 });
 
-flashRouter.get(path + "/islands/:id", async (req: Request, res: Response) => {
+flashRouter.get(path + "/Environments/:id", async (req: Request, res: Response) => {
     const id: string = req?.params?.id;
     try {
-        const island: Island = (await getIsland(dbHelper, id));
+        const Environment: Environment = (await getEnvironment(dbHelper, id));
 
-        if (island) {
-            res.status(200).send(island);
+        if (Environment) {
+            res.status(200).send(Environment);
         }
     } catch (error) {
-        res.status(404).send(`Unable to find matching island with id: ${req.params.id}`);
+        res.status(404).send(`Unable to find matching Environment with id: ${req.params.id}`);
     }
 });

@@ -7,7 +7,6 @@ import express from "express";
 import cors from "cors";
 import { flashRouter, setDbHelper } from "./route/router";
 import { setLogLevel } from "./helpers/logger";
-import { initiateNames } from "./helpers/namesHelper"
 import { LOGINFO } from "./constants";
 import { AcebaseDBHelper } from "./helpers/acebaseHelper"
 import { IDBHelper } from "./helpers/databaseHelper"
@@ -34,8 +33,6 @@ if (DB) {
             const namesInitiated = DB.cleanDb()
 
             setDbHelper(DB);
-
-            if (!namesInitiated) { initiateNames(DB) }
 
             app.use("/", flashRouter);
 

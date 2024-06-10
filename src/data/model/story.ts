@@ -1,5 +1,5 @@
 // External dependencies
-import { DIRECTION_NONE } from "../../constants";
+import { TOPIC_NONE } from "../../constants";
 
 // Class Implementation
 export default class Fish {
@@ -11,7 +11,7 @@ export default class Fish {
         public alive: boolean = true,
         public onHook: boolean = false,
         public staying: boolean = false,
-        public direction: number = DIRECTION_NONE,
-        public lastDirection: number = DIRECTION_NONE) { }
+        public direction: number = TOPIC_NONE,
+        public lastDirection: number = TOPIC_NONE) { }
 }
 

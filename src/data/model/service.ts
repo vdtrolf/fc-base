@@ -1,7 +1,7 @@
 // External dependencies
 
 // Class Implementation
-export default class Cell {
+export default class Service {
     constructor(
         public id: number,
         public vpos: number,
