@@ -568,9 +568,9 @@
     lru-cache "^5.1.1"
     semver "^6.3.1"
 
-"@babel/helper-environment-visitor@^7.22.20":
+"@babel/helper-simulation-visitor@^7.22.20":
   version "7.22.20"
-  resolved "https://registry.yarnpkg.com/@babel/helper-environment-visitor/-/helper-environment-visitor-7.22.20.tgz#96159db61d34a29dba454c959f5ae4a649ba9167"
+  resolved "https://registry.yarnpkg.com/@babel/helper-simulation-visitor/-/helper-simulation-visitor-7.22.20.tgz#96159db61d34a29dba454c959f5ae4a649ba9167"
   integrity sha512-zfedSIzFhat/gFhWfHtgWvlec0nqB9YEIVrpuwjruLlXfUSnA8cJB0miHKwqDnQ7d32aKo2xt88/xZptwxbfhA==
 
 "@babel/helper-function-name@^7.23.0":
@@ -600,7 +600,7 @@
   resolved "https://registry.yarnpkg.com/@babel/helper-module-transforms/-/helper-module-transforms-7.23.3.tgz#d7d12c3c5d30af5b3c0fcab2a6d5217773e2d0f1"
   integrity sha512-7bBs4ED9OmswdfDzpz4MpWgSrV7FXlc3zIagvLFjS5H+Mk7Snr21vQ6QwrsoCGMfNC4e4LQPdoULEt4ykz0SRQ==
   dependencies:
-    "@babel/helper-environment-visitor" "^7.22.20"
+    "@babel/helper-simulation-visitor" "^7.22.20"
     "@babel/helper-module-imports" "^7.22.15"
     "@babel/helper-simple-access" "^7.22.5"
     "@babel/helper-split-export-declaration" "^7.22.6"
@@ -777,7 +777,7 @@
   dependencies:
     "@babel/code-frame" "^7.23.5"
     "@babel/generator" "^7.23.6"
-    "@babel/helper-environment-visitor" "^7.22.20"
+    "@babel/helper-simulation-visitor" "^7.22.20"
     "@babel/helper-function-name" "^7.23.0"
     "@babel/helper-hoist-variables" "^7.22.5"
     "@babel/helper-split-export-declaration" "^7.22.6"
@@ -913,9 +913,9 @@
     slash "^3.0.0"
     strip-ansi "^6.0.0"
 
-"@jest/environment@^29.7.0":
+"@jest/simulation@^29.7.0":
   version "29.7.0"
-  resolved "https://registry.yarnpkg.com/@jest/environment/-/environment-29.7.0.tgz#24d61f54ff1f786f3cd4073b4b94416383baf2a7"
+  resolved "https://registry.yarnpkg.com/@jest/simulation/-/simulation-29.7.0.tgz#24d61f54ff1f786f3cd4073b4b94416383baf2a7"
   integrity sha512-aQIfHDq33ExsN4jP1NWGXhxgQ/wixs60gDiKO+XVMd8Mn0NWPWgc34ZQDTb2jKaUWQ7MuwoitXAsN2XVXNMpAw==
   dependencies:
     "@jest/fake-timers" "^29.7.0"
@@ -955,7 +955,7 @@
   resolved "https://registry.yarnpkg.com/@jest/globals/-/globals-29.7.0.tgz#8d9290f9ec47ff772607fa864ca1d5a2efae1d4d"
   integrity sha512-mpiz3dutLbkW2MNFubUGUEVLkTGiqW6yLVTA+JbP6fI6J5iL9Y0Nlg8k95pcF8ctKwCS7WVxteBs29hhfAotzQ==
   dependencies:
-    "@jest/environment" "^29.7.0"
+    "@jest/simulation" "^29.7.0"
     "@jest/expect" "^29.7.0"
     "@jest/types" "^29.6.3"
     jest-mock "^29.7.0"
@@ -3551,7 +3551,7 @@ jest-circus@^29.7.0:
   resolved "https://registry.yarnpkg.com/jest-circus/-/jest-circus-29.7.0.tgz#b6817a45fcc835d8b16d5962d0c026473ee3668a"
   integrity sha512-3E1nCMgipcTkCocFwM90XXQab9bS+GMsjdpmPrlelaxwD93Ad8iVEjX/vvHPdLPnFf+L40u+5+iutRdA1N9myw==
   dependencies:
-    "@jest/environment" "^29.7.0"
+    "@jest/simulation" "^29.7.0"
     "@jest/expect" "^29.7.0"
     "@jest/test-result" "^29.7.0"
     "@jest/types" "^29.6.3"
@@ -3604,7 +3604,7 @@ jest-config@^29.7.0:
     glob "^7.1.3"
     graceful-fs "^4.2.9"
     jest-circus "^29.7.0"
-    jest-environment-node "^29.7.0"
+    jest-simulation-node "^29.7.0"
     jest-get-type "^29.6.3"
     jest-regex-util "^29.6.3"
     jest-resolve "^29.7.0"
@@ -3645,12 +3645,12 @@ jest-each@^29.7.0:
     jest-util "^29.7.0"
     pretty-format "^29.7.0"
 
-jest-environment-node@^29.7.0:
+jest-simulation-node@^29.7.0:
   version "29.7.0"
-  resolved "https://registry.yarnpkg.com/jest-environment-node/-/jest-environment-node-29.7.0.tgz#0b93e111dda8ec120bc8300e6d1fb9576e164376"
+  resolved "https://registry.yarnpkg.com/jest-simulation-node/-/jest-simulation-node-29.7.0.tgz#0b93e111dda8ec120bc8300e6d1fb9576e164376"
   integrity sha512-DOSwCRqXirTOyheM+4d5YZOrWcdu0LNZ87ewUoywbcb2XR4wKgqiG8vNeYwhjFMbEkfju7wx2GYH0P2gevGvFw==
   dependencies:
-    "@jest/environment" "^29.7.0"
+    "@jest/simulation" "^29.7.0"
     "@jest/fake-timers" "^29.7.0"
     "@jest/types" "^29.6.3"
     "@types/node" "*"
@@ -3762,7 +3762,7 @@ jest-runner@^29.7.0:
   integrity sha512-fsc4N6cPCAahybGBfTRcq5wFR6fpLznMg47sY5aDpsoejOcVYFb07AHuSnR0liMcPTgBsA3ZJL6kFOjPdoNipQ==
   dependencies:
     "@jest/console" "^29.7.0"
-    "@jest/environment" "^29.7.0"
+    "@jest/simulation" "^29.7.0"
     "@jest/test-result" "^29.7.0"
     "@jest/transform" "^29.7.0"
     "@jest/types" "^29.6.3"
@@ -3771,7 +3771,7 @@ jest-runner@^29.7.0:
     emittery "^0.13.1"
     graceful-fs "^4.2.9"
     jest-docblock "^29.7.0"
-    jest-environment-node "^29.7.0"
+    jest-simulation-node "^29.7.0"
     jest-haste-map "^29.7.0"
     jest-leak-detector "^29.7.0"
     jest-message-util "^29.7.0"
@@ -3788,7 +3788,7 @@ jest-runtime@^29.7.0:
   resolved "https://registry.yarnpkg.com/jest-runtime/-/jest-runtime-29.7.0.tgz#efecb3141cf7d3767a3a0cc8f7c9990587d3d817"
   integrity sha512-gUnLjgwdGqW7B4LvOIkbKs9WGbn+QLqRQQ9juC6HndeDiezIwhDP+mhMwHWCEcfQ5RUXa6OPnFF8BJh5xegwwQ==
   dependencies:
-    "@jest/environment" "^29.7.0"
+    "@jest/simulation" "^29.7.0"
     "@jest/fake-timers" "^29.7.0"
     "@jest/globals" "^29.7.0"
     "@jest/source-map" "^29.6.3"

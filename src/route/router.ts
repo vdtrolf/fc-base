@@ -3,19 +3,32 @@ import * as dotenv from 'dotenv'
 dotenv.config()
 
 import express, { Request, Response } from "express";
-import User from "../data/model/user";
+
+import Story from "../data/model/story";
+import { getStoriesList } from "../data/repository/getStoriesList"
+import { getStory } from "../data/repository/getStory"
+import { createStory } from "../data/repository/createStory"
+
+import NewsItem from "../data/model/newsItem";
+import { getNewsItemsList } from "../data/repository/getNewsItemsList"
+import { getNewsItem } from "../data/repository/getNewsItem"
+import { createNewsItem } from "../data/repository/createNewsItem"
+
+import Score from "../data/model/score";
 import { getScoresList } from "../data/repository/getScoresList"
 import { getScore } from "../data/repository/getScore"
 import { createScore } from "../data/repository/createScore"
-import Score from "../data/model/score";
+
+import User from "../data/model/user";
 import { getUsersList } from "../data/repository/getUsersList"
 import { getUser } from "../data/repository/getUser"
 import { createUser } from "../data/repository/createUser"
-import Environment from "../data/model/environment";
-import { getEnvironmentsList } from "../data/repository/getEnvironmentsList"
-import { getEnvironment } from "../data/repository/getEnvironment"
 
-import { buildEnvironment } from "../controller/environmentController"
+import Simulation from "../data/model/simulation";
+import { getSimulationsList } from "../data/repository/getSimulationsList"
+import { getSimulation } from "../data/repository/getSimulation"
+
+import { buildSimulation } from "../controller/simulationController"
 import { IDBHelper } from "../helpers/databaseHelper"
 
 // Set de db helper, which can be i.e. acebase or DynamoDB
@@ -43,14 +56,14 @@ flashRouter.get(path + "/create", async (_req: Request, res: Response) => {
         const difficulty: number = _req?.query.difficulty;
 
 
-        const Environment = await buildEnvironment(dbHelper, null)
+        const Simulation = await buildSimulation(dbHelper, null)
 
-        // console.log("============ Environment ===================")
-        // console.dir(Environment)
+        // console.log("============ Simulation ===================")
+        // console.dir(Simulation)
         // console.log("=======================================")
 
 
-        res.status(200).send(Environment);
+        res.status(200).send(Simulation);
     } catch (error) {
         console.error(error)
         res.status(500).send(error.message);
@@ -99,6 +112,91 @@ flashRouter.post(path + "/scores/", async (req: Request, res: Response) => {
     }
 });
 
+// GET STORY
+
+flashRouter.get(path + "/stories/", async (_req: Request, res: Response) => {
+    try {
+        const stories = (await getStoriesList(dbHelper));
+
+        res.status(200).send(stories);
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+});
+
+flashRouter.get(path + "/stories/:id", async (req: Request, res: Response) => {
+    const id: string = req?.params?.id;
+    try {
+        const story: Story = (await getStory(dbHelper, id));
+
+        if (story) {
+            res.status(200).send(story);
+        }
+    } catch (error) {
+        res.status(404).send(`Unable to find matching story with id: ${req.params.id}`);
+    }
+});
+
+// POST STORY
+
+flashRouter.post(path + "/stories/", async (req: Request, res: Response) => {
+
+    try {
+        const story = req.body as Story;
+        const result = createStory(dbHelper, story);
+
+        result
+            ? res.status(201).send(`Successfully created a new story with id ${story.id}`)
+            : res.status(500).send("Failed to create a new story.");
+    } catch (error) {
+        console.error(error);
+        res.status(400).send(error.message);
+    }
+});
+
+// GET NEWSITEM
+
+flashRouter.get(path + "/newsItems/", async (_req: Request, res: Response) => {
+    try {
+        const newsItems = (await getNewsItemsList(dbHelper));
+
+        res.status(200).send(newsItems);
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+});
+
+flashRouter.get(path + "/newsItems/:id", async (req: Request, res: Response) => {
+    const id: string = req?.params?.id;
+    try {
+        const newsItem: NewsItem = (await getNewsItem(dbHelper, id));
+
+        if (newsItem) {
+            res.status(200).send(newsItem);
+        }
+    } catch (error) {
+        res.status(404).send(`Unable to find matching story with id: ${req.params.id}`);
+    }
+});
+
+// POST NEWSITEM
+
+flashRouter.post(path + "/newsItems/", async (req: Request, res: Response) => {
+
+    try {
+        const newsItem = req.body as NewsItem;
+        const result = createNewsItem(dbHelper, newsItem);
+
+        result
+            ? res.status(201).send(`Successfully created a new story with id ${newsItem.id}`)
+            : res.status(500).send("Failed to create a new story.");
+    } catch (error) {
+        console.error(error);
+        res.status(400).send(error.message);
+    }
+});
+
+
 // GET USER
 
 flashRouter.get(path + "/users/", async (_req: Request, res: Response) => {
@@ -141,27 +239,27 @@ flashRouter.post(path + "/users/", async (req: Request, res: Response) => {
     }
 });
 
-// GET Environment
+// GET Simulation
 
-flashRouter.get(path + "/Environments/", async (_req: Request, res: Response) => {
+flashRouter.get(path + "/Simulations/", async (_req: Request, res: Response) => {
     try {
-        const Environments = (await getEnvironmentsList(dbHelper));
+        const Simulations = (await getSimulationsList(dbHelper));
 
-        res.status(200).send(Environments);
+        res.status(200).send(Simulations);
     } catch (error) {
         res.status(500).send(error.message);
     }
 });
 
-flashRouter.get(path + "/Environments/:id", async (req: Request, res: Response) => {
+flashRouter.get(path + "/Simulations/:id", async (req: Request, res: Response) => {
     const id: string = req?.params?.id;
     try {
-        const Environment: Environment = (await getEnvironment(dbHelper, id));
+        const Simulation: Simulation = (await getSimulation(dbHelper, id));
 
-        if (Environment) {
-            res.status(200).send(Environment);
+        if (Simulation) {
+            res.status(200).send(Simulation);
         }
     } catch (error) {
-        res.status(404).send(`Unable to find matching Environment with id: ${req.params.id}`);
+        res.status(404).send(`Unable to find matching Simulation with id: ${req.params.id}`);
     }
 });

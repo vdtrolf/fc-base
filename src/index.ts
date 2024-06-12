@@ -18,7 +18,7 @@ app.use(cors());
 
 const port : string = process.env.EXPRESSPORT; // default port to listen
 const path = process.env.API_PATH; // default port to listen
-const local = process.env.DB_ENVIRONMENT === "local"
+const local = process.env.DB_SIMULATION === "local"
 const DB: IDBHelper = process.env.DBHELPER === "acebaseHelper" ? new AcebaseDBHelper(local) : null;
 
 // console.log(">>>" + "./services/" + process.env.DBHELPER + " >>> " + port)

@@ -8,13 +8,13 @@ export const LOGDUMP = 2;
 
 export const BOARDSIZE = 6
 
-export const PREFIX_ENVIRONMENT = 1
+export const PREFIX_SIMULATION = 1
 export const PREFIX_DEVICE = 2
 export const PREFIX_SERVICE = 3
 export const PREFIX_NAME = 7
 
 export const NAME_TYPE_PERSON = 1
-export const NAME_TYPE_ENVIRONMENT = 9
+export const NAME_TYPE_SIMULATION = 9
 
 export const ACTIVITY_NONE = 0
 export const ACTIVITY_EATING = 1

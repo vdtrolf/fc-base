@@ -4,7 +4,7 @@ import Service from "./service";
 import User from "./user"
 
 // Class Implementation
-export default class Environment {
+export default class Simulation {
     constructor(
         public id: number,
         public key: number,
@@ -15,6 +15,6 @@ export default class Environment {
         public devices: Device[] = [],
         public services: Service[][] = []) {
 
-        console.log("@@@@@ environment created wikth name " + this.name)
+        console.log("@@@@@ simulation created wikth name " + this.name)
     }
 }

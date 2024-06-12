@@ -2,16 +2,16 @@
 import { TOPIC_NONE } from "../../constants";
 
 // Class Implementation
-export default class Fish {
+export default class Story {
     constructor(
         public id: number,
         public key: number,
-        public vpos: number,
-        public hpos: number,
-        public alive: boolean = true,
-        public onHook: boolean = false,
-        public staying: boolean = false,
-        public direction: number = TOPIC_NONE,
-        public lastDirection: number = TOPIC_NONE) { }
+        public language: number,
+        public content: string,
+        public publicationDate: string ,
+        public author: string,
+        public topic: string,
+        public refURL : string ,
+        public isActive : boolean = false) { }
 }
 
