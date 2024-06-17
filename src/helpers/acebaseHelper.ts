@@ -12,7 +12,7 @@ export class AcebaseDBHelper implements IDBHelper {
 
     constructor(local: boolean) {
         this.local = local;
-        this.debug = false;
+        this.debug = true;
         this.realm = "this.db";
         this.source = "acebasehelper.js";
         this.db = null;
@@ -87,8 +87,8 @@ export class AcebaseDBHelper implements IDBHelper {
 
     getAsyncItems = async (
         tableName: string,
-        filterIdx: string = "id",
-        filterComparator: string = ">",
+        filterIdx: string = 'id',
+        filterComparator: string = '>',
         filterVal: number = 0
     ): Promise<[]> => {
 
@@ -103,7 +103,6 @@ export class AcebaseDBHelper implements IDBHelper {
         if (this.db && this.db.ready()) {
 
             const snapshots = await this.db.query(tableName)
-                // .take(50)
                 .filter(filterIdx, filterComparator, filterVal)
                 .get();
 

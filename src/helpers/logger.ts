@@ -12,6 +12,7 @@ let loglevel: number = LOGERR;
 // sets the log level either for all realms or a specific realm 
 // log level can be INFO or VERBOSE (ERROR is always displayed)
 export const setLogLevel = (realm: string, level: number = LOGERR) => {
+
     if (realm === "all" && level === LOGINFO) {
         allInfoRealms = true;
         console.log("logger.js - setLogLevel - adding all to info mode");
@@ -39,6 +40,9 @@ export const log = (
     level: number = LOGINFO,
     logtype: number = LOGTEXT
 ) => {
+
+    console.log("#### " + logtext)
+
     if (level >= loglevel) {
         if (level === LOGERR) {
             console.error(origclass + "-" + origfunction + "\n", logtext);
@@ -47,7 +51,7 @@ export const log = (
                 (level === LOGINFO && (allInfoRealms || infoRealms.includes(realm))) ||
                 (level === LOGVERB && (allVerbRealms || verbRealms.includes(realm)))
             ) {
-                if (logtype === LOGTEXT) {
+                if (logtype === LOGINFO) {
                     console.log(origclass + "-" + origfunction + ": " + logtext);
                 } else if (logtype === LOGDATA) {
                     console.log(`/ /---- ${origclass} - ${origfunction} -------\\ \\`);

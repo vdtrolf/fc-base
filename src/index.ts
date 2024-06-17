@@ -7,7 +7,7 @@ import express from "express";
 import cors from "cors";
 import { flashRouter, setDbHelper } from "./route/router";
 import { setLogLevel } from "./helpers/logger";
-import { LOGINFO } from "./constants";
+import { LOGINFO, LOGVERB } from "./constants";
 import { AcebaseDBHelper } from "./helpers/acebaseHelper"
 import { IDBHelper } from "./helpers/databaseHelper"
 

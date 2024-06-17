@@ -15,6 +15,6 @@ export default class Simulation {
         public devices: Device[] = [],
         public services: Service[][] = []) {
 
-        console.log("@@@@@ simulation created wikth name " + this.name)
+        console.log("@@@@@ simulation created with name " + this.name)
     }
 }
