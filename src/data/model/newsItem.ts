@@ -10,8 +10,8 @@ export default class NewsItem {
         public content: string,
         public publicationDate: string ,
         public author: string,
-        public topic: string,
-        public refURL : string ,
+        public topic: number = TOPIC_NONE,
+        public refURL : string = "",
         public isActive : boolean = false) { }
 }
 

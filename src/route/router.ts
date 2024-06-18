@@ -52,8 +52,8 @@ flashRouter.get(path + "/create", async (_req: Request, res: Response) => {
 
     try {
 
-        const size: number = _req?.query.size;
-        const difficulty: number = _req?.query.difficulty;
+        //const size: number = _req?.query.size;
+        //const difficulty: number = _req?.query.difficulty;
 
 
         const Simulation = await buildSimulation(dbHelper, null)

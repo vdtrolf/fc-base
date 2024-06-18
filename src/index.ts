@@ -7,7 +7,7 @@ import express from "express";
 import cors from "cors";
 import { flashRouter, setDbHelper } from "./route/router";
 import { setLogLevel } from "./helpers/logger";
-import { LOGINFO, LOGVERB } from "./constants";
+import { LOGINFO } from "./constants";
 import { AcebaseDBHelper } from "./helpers/acebaseHelper"
 import { IDBHelper } from "./helpers/databaseHelper"
 
@@ -30,7 +30,7 @@ if (DB) {
 
     DB.createDb(local)
         .then(() => {
-            const namesInitiated = DB.cleanDb()
+            // const namesInitiated = DB.cleanDb()
 
             setDbHelper(DB);
 
