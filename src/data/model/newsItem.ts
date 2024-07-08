@@ -12,6 +12,7 @@ export default class NewsItem {
         public author: string,
         public topic: number = TOPIC_NONE,
         public refURL : string = "",
+        public domain: number = 0, 
         public isActive : boolean = false) { }
 }
 

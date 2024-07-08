@@ -12,6 +12,7 @@ export default class Story {
         public author: string,
         public topic: number = TOPIC_NONE,
         public refURL : string = "",
+        public domaon = 0,
         public isActive : boolean = false) { }
 }
 

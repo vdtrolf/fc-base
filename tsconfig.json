@@ -9,12 +9,12 @@
     "outDir": "dist",
     "types": [
       // ... your other types
-      "node"
+      "node", "jest"
     ]
   },
   "include": [
     "src/**/*"
-  ],
+, "tests/unit"  ],
   "exclude": [
     "node_modules"
   ]

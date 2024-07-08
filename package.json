@@ -4,19 +4,22 @@
     "compile": "tsc",
     "start": "node dist/index.js",
     "lint": "eslint . --ext .ts",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "format": "tsfmt -r"
   },
   "dependencies": {
-    "@aws-sdk/client-dynamodb": "^3.441.0",
-    "@aws-sdk/lib-dynamodb": "^3.445.0",
-    "@aws-sdk/util-dynamodb": "^3.441.0",
+    "@babel/core": "7.24.7",
+    "@babel/preset-env": "7.24.7",
+    "@types/jest": "29.5.12",
     "acebase": "^1.29.5",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "eslint": "^8.56.0",
     "express": "^4.18.2",
     "https": "^1.0.0",
+    "jest": "29.7.0",
+    "ts-jest": "29.1.5",
+    "ts-node": "10.9.2",
     "typescript-formatter": "^7.2.2"
   },
   "devDependencies": {

@@ -2,6 +2,7 @@ import { LOGVERB, LOGINFO, LOGERR, LOGDATA, LOGTEXT, LOGDUMP } from "../constant
 
 const infoRealms = [];
 const verbRealms = [];
+const debug = false;
 let allInfoRealms: boolean = false;
 let allVerbRealms: boolean = false;
 
@@ -41,7 +42,9 @@ export const log = (
     logtype: number = LOGTEXT
 ) => {
 
-    console.log("#### " + logtext)
+    if (debug) {
+        console.log("#### " + realm + "|" + level + "|" + logtype + "|"  + logtext)
+    }
 
     if (level >= loglevel) {
         if (level === LOGERR) {

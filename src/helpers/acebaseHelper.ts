@@ -10,10 +10,10 @@ export class AcebaseDBHelper implements IDBHelper {
     source: string;
     db;
 
-    constructor(local: boolean) {
+    constructor(local: boolean, debug : boolean = true) {
         this.local = local;
-        this.debug = true;
-        this.realm = "this.db";
+        this.debug = debug;
+        this.realm = "db";
         this.source = "acebasehelper.js";
         this.db = null;
     }
@@ -42,12 +42,6 @@ export class AcebaseDBHelper implements IDBHelper {
             tableName +
             " id: " +
             uniqueId, LOGINFO, LOGDATA);
-
-        //let itemToPut : Island = <Island><unknown>item
-
-        // console.log("=============> > > " + typeof itemToPut)
-
-
 
         if (this.db && this.db.ready()) {
             this.db.ref(`${tableName}/${uniqueId}`).set(item);
@@ -86,13 +80,40 @@ export class AcebaseDBHelper implements IDBHelper {
     };
 
     getAsyncItems = async (
-        tableName: string,
-        filterIdx: string = 'id',
-        filterComparator: string = '>',
-        filterVal: number = 0
+        tableName: string
     ): Promise<[]> => {
 
         log(this.realm, this.source, "getAsyncItems",
+            "table " +
+            tableName ) 
+            
+
+        if (this.db && this.db.ready()) {
+
+            const snapshots = await this.db.query(tableName)
+                .get();
+
+            if (this.debug) {
+                console.log("================ getAsyncItems ======");
+                console.dir(snapshots.getValues());
+                console.log("================ getAsyncItems ======");
+            }
+
+            return snapshots.getValues();
+
+        } else {
+            return []
+        }
+    };
+
+    queryAsyncItems = async (
+        tableName: string,
+        filterIdx: string = 'id',
+        filterComparator: string = '>',
+        filterVal: number  = 0
+    ): Promise<[]> => {
+
+        log(this.realm, this.source, "queryAsyncItems",
             "table " +
             tableName +
             " filter " +
@@ -107,9 +128,9 @@ export class AcebaseDBHelper implements IDBHelper {
                 .get();
 
             if (this.debug) {
-                console.log("================ getAsyncItems ======");
+                console.log("================ queryAsyncItems ======");
                 console.dir(snapshots.getValues());
-                console.log("================ getAsyncItems ======");
+                console.log("================ queryAsyncItems ======");
             }
 
             return snapshots.getValues();
