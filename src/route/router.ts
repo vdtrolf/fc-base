@@ -4,6 +4,16 @@ dotenv.config()
 
 import express, { Request, Response } from "express";
 
+import Site from "../data/model/site";
+import { getSitesList } from "../data/repository/getSitesList"
+import { getSite } from "../data/repository/getSite"
+import { createSite } from "../data/repository/createSite"
+
+import Language from "../data/model/language";
+import { getLanguagesList } from "../data/repository/getLanguagesList"
+import { getLanguage } from "../data/repository/getLanguage"
+import { createLanguage } from "../data/repository/createLanguage"
+
 import Story from "../data/model/story";
 import { getStoriesList } from "../data/repository/getStoriesList"
 import { getStory } from "../data/repository/getStory"
@@ -69,6 +79,91 @@ flashRouter.get(path + "/create", async (_req: Request, res: Response) => {
         res.status(500).send(error.message);
     }
 });
+
+// GET SITE
+
+flashRouter.get(path + "/sites/", async (_req: Request, res: Response) => {
+    try {
+        const sites = (await getSitesList(dbHelper));
+
+        res.status(200).send(sites);
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+});
+
+flashRouter.get(path + "/sites/:id", async (req: Request, res: Response) => {
+    const id: string = req?.params?.id;
+    try {
+        const site: Site = (await getSite(dbHelper, id));
+
+        if (site) {
+            res.status(200).send(site);
+        }
+    } catch (error) {
+        res.status(404).send(`Unable to find matching site with id: ${req.params.id}`);
+    }
+});
+
+// POST SITE
+
+flashRouter.post(path + "/sites/", async (req: Request, res: Response) => {
+
+    try {
+        const site = req.body as Site;
+        const result = createSite(dbHelper, site);
+
+        result
+            ? res.status(201).send(`Successfully created a new site with id ${site.id}`)
+            : res.status(500).send("Failed to create a new site.");
+    } catch (error) {
+        console.error(error);
+        res.status(400).send(error.message);
+    }
+});
+
+// GET LANGUAGE
+
+flashRouter.get(path + "/languages/", async (_req: Request, res: Response) => {
+    try {
+        const languages = (await getLanguagesList(dbHelper));
+
+        res.status(200).send(languages);
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+});
+
+flashRouter.get(path + "/languages/:id", async (req: Request, res: Response) => {
+    const id: string = req?.params?.id;
+    try {
+        const language: Language = (await getLanguage(dbHelper, id));
+
+        if (language) {
+            res.status(200).send(language);
+        }
+    } catch (error) {
+        res.status(404).send(`Unable to find matching language with id: ${req.params.id}`);
+    }
+});
+
+// POST LANGUAGE
+
+flashRouter.post(path + "/languages/", async (req: Request, res: Response) => {
+
+    try {
+        const language = req.body as Language;
+        const result = createLanguage(dbHelper, language);
+
+        result
+            ? res.status(201).send(`Successfully created a new language with id ${language.id}`)
+            : res.status(500).send("Failed to create a new site.");
+    } catch (error) {
+        console.error(error);
+        res.status(400).send(error.message);
+    }
+});
+
 
 // GET SCORE
 
